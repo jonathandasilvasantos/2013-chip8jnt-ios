@@ -18,6 +18,10 @@
 		566A501C1752866B00A90940 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 566A501B1752866B00A90940 /* Default-568h@2x.png */; };
 		566A501F1752866B00A90940 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 566A501E1752866B00A90940 /* ViewController.m */; };
 		566A50221752866B00A90940 /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 566A50201752866B00A90940 /* ViewController.xib */; };
+		566A502B17529F1000A90940 /* Chip8.m in Sources */ = {isa = PBXBuildFile; fileRef = 566A502A17529F1000A90940 /* Chip8.m */; };
+		566A502F1752B11500A90940 /* pong.ch8 in Resources */ = {isa = PBXBuildFile; fileRef = 566A502D1752B11500A90940 /* pong.ch8 */; };
+		566A50301752B11500A90940 /* prads.ch8 in Resources */ = {isa = PBXBuildFile; fileRef = 566A502E1752B11500A90940 /* prads.ch8 */; };
+		566A50341752BA2700A90940 /* Chip8jntUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 566A50331752BA2700A90940 /* Chip8jntUtils.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +41,12 @@
 		566A501D1752866B00A90940 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		566A501E1752866B00A90940 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		566A50211752866B00A90940 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController.xib; sourceTree = "<group>"; };
+		566A502917529F1000A90940 /* Chip8.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Chip8.h; sourceTree = "<group>"; };
+		566A502A17529F1000A90940 /* Chip8.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Chip8.m; sourceTree = "<group>"; };
+		566A502D1752B11500A90940 /* pong.ch8 */ = {isa = PBXFileReference; lastKnownFileType = file; path = pong.ch8; sourceTree = "<group>"; };
+		566A502E1752B11500A90940 /* prads.ch8 */ = {isa = PBXFileReference; lastKnownFileType = file; path = prads.ch8; sourceTree = "<group>"; };
+		566A50321752BA2700A90940 /* Chip8jntUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Chip8jntUtils.h; sourceTree = "<group>"; };
+		566A50331752BA2700A90940 /* Chip8jntUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Chip8jntUtils.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +93,8 @@
 		566A500B1752866A00A90940 /* Chip8jnt */ = {
 			isa = PBXGroup;
 			children = (
+				566A50311752B9D900A90940 /* UTIL */,
+				566A502817529EE900A90940 /* CPU */,
 				566A50141752866A00A90940 /* AppDelegate.h */,
 				566A50151752866B00A90940 /* AppDelegate.m */,
 				566A501D1752866B00A90940 /* ViewController.h */,
@@ -96,6 +108,7 @@
 		566A500C1752866A00A90940 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				566A502C1752B11500A90940 /* roms */,
 				566A500D1752866A00A90940 /* Chip8jnt-Info.plist */,
 				566A500E1752866A00A90940 /* InfoPlist.strings */,
 				566A50111752866A00A90940 /* main.m */,
@@ -105,6 +118,33 @@
 				566A501B1752866B00A90940 /* Default-568h@2x.png */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		566A502817529EE900A90940 /* CPU */ = {
+			isa = PBXGroup;
+			children = (
+				566A502917529F1000A90940 /* Chip8.h */,
+				566A502A17529F1000A90940 /* Chip8.m */,
+			);
+			name = CPU;
+			sourceTree = "<group>";
+		};
+		566A502C1752B11500A90940 /* roms */ = {
+			isa = PBXGroup;
+			children = (
+				566A502D1752B11500A90940 /* pong.ch8 */,
+				566A502E1752B11500A90940 /* prads.ch8 */,
+			);
+			path = roms;
+			sourceTree = SOURCE_ROOT;
+		};
+		566A50311752B9D900A90940 /* UTIL */ = {
+			isa = PBXGroup;
+			children = (
+				566A50321752BA2700A90940 /* Chip8jntUtils.h */,
+				566A50331752BA2700A90940 /* Chip8jntUtils.m */,
+			);
+			name = UTIL;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -163,6 +203,8 @@
 				566A501A1752866B00A90940 /* Default@2x.png in Resources */,
 				566A501C1752866B00A90940 /* Default-568h@2x.png in Resources */,
 				566A50221752866B00A90940 /* ViewController.xib in Resources */,
+				566A502F1752B11500A90940 /* pong.ch8 in Resources */,
+				566A50301752B11500A90940 /* prads.ch8 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -176,6 +218,8 @@
 				566A50121752866A00A90940 /* main.m in Sources */,
 				566A50161752866B00A90940 /* AppDelegate.m in Sources */,
 				566A501F1752866B00A90940 /* ViewController.m in Sources */,
+				566A502B17529F1000A90940 /* Chip8.m in Sources */,
+				566A50341752BA2700A90940 /* Chip8jntUtils.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

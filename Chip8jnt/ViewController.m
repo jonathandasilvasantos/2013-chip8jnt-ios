@@ -7,7 +7,8 @@
 //
 
 #import "ViewController.h"
-
+#import "Chip8.h"
+#import "Chip8jntUtils.h"
 @interface ViewController ()
 
 @end
@@ -18,12 +19,23 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+
+    // We create a object to execute some utils functions
+    Chip8jntUtils *utils = [[Chip8jntUtils alloc] init];
+    [utils listAllRoms]; // Show all roms avaliable.
+    
+    Chip8 *ch8 = [[Chip8 alloc] init];
+    [ch8 startWithRom:@"pong.ch8"];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(void)bitwise {
+
 }
 
 @end
