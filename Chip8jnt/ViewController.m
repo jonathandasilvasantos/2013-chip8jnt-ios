@@ -25,7 +25,8 @@
     [utils listAllRoms]; // Show all roms avaliable.
     
     Chip8 *ch8 = [[Chip8 alloc] init];
-    [ch8 startWithRom:@"pong.ch8"];
+    ch8.canvas = self.canvas;
+    [ch8 startWithRom:@"prads.ch8"];
 }
 
 - (void)didReceiveMemoryWarning

@@ -22,6 +22,7 @@
 		566A502F1752B11500A90940 /* pong.ch8 in Resources */ = {isa = PBXBuildFile; fileRef = 566A502D1752B11500A90940 /* pong.ch8 */; };
 		566A50301752B11500A90940 /* prads.ch8 in Resources */ = {isa = PBXBuildFile; fileRef = 566A502E1752B11500A90940 /* prads.ch8 */; };
 		566A50341752BA2700A90940 /* Chip8jntUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 566A50331752BA2700A90940 /* Chip8jntUtils.m */; };
+		569351E41754072E00911B2A /* Chip8Canvas.m in Sources */ = {isa = PBXBuildFile; fileRef = 569351E31754072E00911B2A /* Chip8Canvas.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,6 +48,8 @@
 		566A502E1752B11500A90940 /* prads.ch8 */ = {isa = PBXFileReference; lastKnownFileType = file; path = prads.ch8; sourceTree = "<group>"; };
 		566A50321752BA2700A90940 /* Chip8jntUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Chip8jntUtils.h; sourceTree = "<group>"; };
 		566A50331752BA2700A90940 /* Chip8jntUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Chip8jntUtils.m; sourceTree = "<group>"; };
+		569351E21754072E00911B2A /* Chip8Canvas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Chip8Canvas.h; sourceTree = "<group>"; };
+		569351E31754072E00911B2A /* Chip8Canvas.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Chip8Canvas.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +96,7 @@
 		566A500B1752866A00A90940 /* Chip8jnt */ = {
 			isa = PBXGroup;
 			children = (
+				569351E1175406F900911B2A /* VIDEO */,
 				566A50311752B9D900A90940 /* UTIL */,
 				566A502817529EE900A90940 /* CPU */,
 				566A50141752866A00A90940 /* AppDelegate.h */,
@@ -145,6 +149,15 @@
 				566A50331752BA2700A90940 /* Chip8jntUtils.m */,
 			);
 			name = UTIL;
+			sourceTree = "<group>";
+		};
+		569351E1175406F900911B2A /* VIDEO */ = {
+			isa = PBXGroup;
+			children = (
+				569351E21754072E00911B2A /* Chip8Canvas.h */,
+				569351E31754072E00911B2A /* Chip8Canvas.m */,
+			);
+			name = VIDEO;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -220,6 +233,7 @@
 				566A501F1752866B00A90940 /* ViewController.m in Sources */,
 				566A502B17529F1000A90940 /* Chip8.m in Sources */,
 				566A50341752BA2700A90940 /* Chip8jntUtils.m in Sources */,
+				569351E41754072E00911B2A /* Chip8Canvas.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -342,6 +356,7 @@
 				566A50271752866B00A90940 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

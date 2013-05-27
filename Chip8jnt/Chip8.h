@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Chip8Canvas.h"
 
 @interface Chip8 : NSObject {
 
@@ -40,6 +41,8 @@
     BOOL debug;
 }
 
+@property(nonatomic, strong) Chip8Canvas *canvas; // Canvas for draw method
+
 - (void) startWithRom:(NSString*)rom_name; // Start emulator cycle with a specific rom
 
 - (void)loadGame:(NSString*)rom_name; // Load the rom in the memory (0x200 - 0xFFF)
@@ -70,6 +73,10 @@
 
 - (void)handleFXXXOpcodes;  // I prefered to create a method to handle
                             // those opcodes;
+
+- (void)handleTimers; // Handle delay and sound timers
+
+- (void)beep; // Play beep;
 
 - (void)handle00XXOpcodes;  // I prefered to create a method to handle
 // those opcodes;

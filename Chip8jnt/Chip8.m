@@ -35,18 +35,16 @@ static unsigned char fontset[80] =
 - (void) startWithRom:(NSString*)rom_name {
     
     // We turn on the debug mode
-    debug = YES;
+//    debug = YES;
     
     // First, we need to initialize the cpu
     [self initialize];
     
     // Load the rom file
     [self loadGame:rom_name];
-    
-    // For tests; we are using a limited cycle
-    for(;;) {
-        [self cycle];
-    }
+
+    [self cycle];
+
     
 }
 
@@ -139,7 +137,24 @@ static unsigned char fontset[80] =
     
     opcode = memory[pc] << 8 | memory[pc + 1];
     [self executeOpcode];
+    [self handleTimers];
+    [self.canvas setGFX:gfx];
+//    [self.canvas setNeedsDisplay];
 
+    [self performSelector:@selector(cycle) withObject:nil afterDelay:0.01];
+}
+- (void)handleTimers {
+    
+    // All timers reaches zero
+    if(delay_timer > 60) delay_timer--;
+    if(sound_timer > 60) sound_timer--;
+    
+    // When sound timer reaches one; Chip-8 plays a beep.
+    if(sound_timer == 1) [self beep];
+}
+
+- (void)beep {
+    NSLog(@"Beep!");
 }
 
 // We identify and execute the current opcode
@@ -253,6 +268,7 @@ static unsigned char fontset[80] =
                 }
             }
             pc = pc + 2;
+            [self.canvas setNeedsDisplay];
             [self dlogAffecteds];
             
             break;

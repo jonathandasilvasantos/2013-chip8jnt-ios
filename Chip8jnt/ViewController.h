@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Chip8Canvas.h"
 
 @interface ViewController : UIViewController
-
+@property (nonatomic, strong) IBOutlet Chip8Canvas *canvas;
 
 -(void)bitwise;
 
