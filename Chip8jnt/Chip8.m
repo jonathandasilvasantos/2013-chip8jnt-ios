@@ -156,6 +156,14 @@ static unsigned char fontset[80] =
             [self handle00XXOpcodes];
             break;
             
+        case 0x1000:
+            // Jumps to address NNN.
+            [self dlogPrintOpcode];
+            [self dclone];
+            pc = opcode & 0x0FFF;
+            [self dlogAffecteds];
+            break;
+            
         case 0x2000:
             // Calls subroutine at NNN.
             [self dlogPrintOpcode];
@@ -170,6 +178,15 @@ static unsigned char fontset[80] =
             [self dlogPrintOpcode];
             [self dclone];
             if( V[opcode & 0x0F00] >> 8 == (opcode & 0x00FF) ) pc = pc + 2;
+            pc = pc + 2;
+            [self dlogAffecteds];
+            break;
+            
+        case 0x4000:
+            // Skips the next instruction if VX doesn't equal NN.
+            [self dlogPrintOpcode];
+            [self dclone];
+            if( V[opcode & 0x0F00 >> 8] != (opcode & 0x00FF) ) pc = pc + 2;
             pc = pc + 2;
             [self dlogAffecteds];
             break;
@@ -190,6 +207,10 @@ static unsigned char fontset[80] =
             V[opcode & 0x0F00 >> 8] = V[opcode & 0x0F00 >> 8] + opcode & 0x00FF;
             pc = pc + 2;
             [self dlogAffecteds];
+            break;
+            
+        case 0x8000:
+            [self handle8XXXOpcodes];
             break;
             
         case 0xA000:
@@ -250,6 +271,116 @@ static unsigned char fontset[80] =
     }
 }
 
+- (void)handle8XXXOpcodes {
+    
+    NSString *errorMessage = [NSString stringWithFormat:@"Error: Opcode %x not found", opcode];
+    
+    unsigned short x, y;
+    
+    switch (opcode & 0xF00F) {
+            
+        case 0x8000:
+            //Sets VX to the value of VY.
+            [self dlogPrintOpcode];
+            [self dclone];
+            V[opcode & 0x0F00 >> 8] = V[opcode & 0x00F0 >> 4];
+            pc = pc + 2;
+            [self dlogAffecteds];
+            break;
+            
+        case 0x8001:
+            //Sets VX to VX or VY
+            [self dlogPrintOpcode];
+            [self dclone];
+            V[opcode & 0x0F00 >> 8] = V[opcode & 0x0F00 >> 8] | V[opcode & 0x00F0 >> 4];
+            pc = pc + 2;
+            [self dlogAffecteds];
+            break;
+            
+        case 0x8002:
+            //Sets VX to VX and VY
+            [self dlogPrintOpcode];
+            [self dclone];
+            V[opcode & 0x0F00 >> 8] = V[opcode & 0x0F00 >> 8] & V[opcode & 0x00F0 >> 4];
+            pc = pc + 2;
+            [self dlogAffecteds];
+            break;
+            
+        case 0x8003:
+            //Sets VX to VX xor VY
+            [self dlogPrintOpcode];
+            [self dclone];
+            V[opcode & 0x0F00 >> 8] = V[opcode & 0x0F00 >> 8] ^ V[opcode & 0x00F0 >> 4];
+            pc = pc + 2;
+            [self dlogAffecteds];
+            break;
+            
+        case 0x8004:
+            // Adds VY to VX. VF is set to 1 when there's a carry, and to 0 when there isn't.
+            [self dlogPrintOpcode];
+            [self dclone];
+            x = opcode & 0x0F00 >> 8;
+            y = opcode & 0x00F0 >> 4;
+            
+            V[x] = V[x] + V[y];
+            V[0xF] = 0;
+            if(x + y > 255) V[0xF] = 1;
+            pc = pc + 2;
+            [self dlogAffecteds];
+            break;
+            
+        case 0x8005:
+            // VY is subtracted from VX. VF is set to 0 when there's a borrow, and 1 when there isn't.
+            [self dlogPrintOpcode];
+            [self dclone];
+            x = opcode & 0x0F00 >> 8;
+            y = opcode & 0x00F0 >> 4;
+            V[x] = V[x] - V[y];
+            V[0xF] = 0;
+            if(x > y) V[0xF] = 1;
+            pc = pc + 2;
+            [self dlogAffecteds];
+            break;
+            
+        case 0x8006:
+            // Need to be checked.
+            // Shifts VX right by one. VF is set to the value of the least significant bit of VX before the shift.
+            [self dlogPrintOpcode];
+            [self dclone];
+            V[0xF] = V[opcode & 0x0F00 >> 8] & 0x000F;
+            V[opcode & 0x0F00 >> 8] = V[opcode & 0x0F00 >> 8] >> 1;
+            pc = pc + 2;
+            [self dlogAffecteds];
+            break;
+            
+        case 0x8007:
+            // Sets VX to VY minus VX. VF is set to 0 when there's a borrow, and 1 when there isn't.
+            [self dlogPrintOpcode];
+            [self dclone];
+            V[0xF] = 1;
+            if(V[opcode & 0x00F0 >> 4] < V[opcode & 0x0F00 >> 8]) V[0xF] = 0;
+            V[opcode & 0x0F00 >> 8] = V[opcode & 0x00F0 >> 4] - V[opcode & 0x0F00 >> 8];
+            pc = pc + 2;
+            [self dlogAffecteds];
+            break;
+            
+        case 0x800E:
+            // Need to be checked;
+            // Shifts VX left by one. VF is set to the value of the most significant bit of VX before the shift
+            [self dlogPrintOpcode];
+            [self dclone];
+            V[0xF] = V[opcode & 0x0F00 >> 8] & 0xF000;
+            V[opcode & 0x0F00 >> 8] = V[opcode & 0x0F00 >> 8] << 1;
+            pc = pc + 2;
+            [self dlogAffecteds];
+            break;
+            
+        default:
+            [self interruptWithMessage:errorMessage];
+            break;
+    }
+}
+
 - (void)handle00XXOpcodes {
     
     NSString *errorMessage = [NSString stringWithFormat:@"Error: Opcode %x not found", opcode];
@@ -285,6 +416,7 @@ static unsigned char fontset[80] =
             break;
             
         default:
+            [self interruptWithMessage:errorMessage];
             break;
     }
     
@@ -311,6 +443,15 @@ static unsigned char fontset[80] =
             [self dlogPrintOpcode];
             [self dclone];
             delay_timer = V[(opcode & 0x0F00) >> 8];
+            pc = pc + 2;
+            [self dlogAffecteds];
+            break;
+            
+        case 0xF018:
+            // Sets the sound timer to VX.
+            [self dlogPrintOpcode];
+            [self dclone];
+            sound_timer = V[opcode & 0x0F00 >> 8];
             pc = pc + 2;
             [self dlogAffecteds];
             break;

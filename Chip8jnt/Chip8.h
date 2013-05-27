@@ -62,6 +62,9 @@
 
 - (void)executeOpcode; // Execute the current opcode;
 
+- (void)handle8XXXOpcodes;  // I prefered to create a method to handle
+// those opcodes;
+
 - (void)handleEXXXOpcodes;  // I prefered to create a method to handle
 // those opcodes;
 
