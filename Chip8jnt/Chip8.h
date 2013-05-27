@@ -62,8 +62,14 @@
 
 - (void)executeOpcode; // Execute the current opcode;
 
+- (void)handleEXXXOpcodes;  // I prefered to create a method to handle
+// those opcodes;
+
 - (void)handleFXXXOpcodes;  // I prefered to create a method to handle
                             // those opcodes;
+
+- (void)handle00XXOpcodes;  // I prefered to create a method to handle
+// those opcodes;
 
 - (void)resetDisplay; // Reset the gfx array.
 - (void)resetStack; // Reset the stack array.

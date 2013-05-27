@@ -151,13 +151,26 @@ static unsigned char fontset[80] =
     
     switch (primaryCode) {
             
+
+        case 0x0000:
+            [self handle00XXOpcodes];
+            break;
             
         case 0x2000:
             // Calls subroutine at NNN.
             [self dlogPrintOpcode];
             [self dclone];
             stack[sp] = pc;
+            sp++;
             pc = opcode & 0x0FFF;
+            [self dlogAffecteds];
+            break;
+            
+        case 0x3000:
+            [self dlogPrintOpcode];
+            [self dclone];
+            if( V[opcode & 0x0F00] >> 8 == (opcode & 0x00FF) ) pc = pc + 2;
+            pc = pc + 2;
             [self dlogAffecteds];
             break;
             
@@ -170,11 +183,28 @@ static unsigned char fontset[80] =
             [self dlogAffecteds];
             break;
             
+        case 0x7000:
+            // Sets VX to NN.
+            [self dclone];
+            [self dlogPrintOpcode];
+            V[opcode & 0x0F00 >> 8] = V[opcode & 0x0F00 >> 8] + opcode & 0x00FF;
+            pc = pc + 2;
+            [self dlogAffecteds];
+            break;
+            
         case 0xA000:
             // Sets i to the address NNN
             [self dlogPrintOpcode];
             [self dclone];
             i = opcode & 0x0FFF;
+            pc = pc + 2;
+            [self dlogAffecteds];
+            break;
+            
+        case 0xC000:
+            [self dlogPrintOpcode];
+            [self dclone];
+            V[opcode & 0x0F00 >> 8] = arc4random()%10 & (opcode & 0x00FF);
             pc = pc + 2;
             [self dlogAffecteds];
             break;
@@ -205,6 +235,10 @@ static unsigned char fontset[80] =
             [self dlogAffecteds];
             
             break;
+            
+        case 0xE000:
+            [self handleEXXXOpcodes];
+            break;
 
         case 0xF000:
             [self handleFXXXOpcodes];
@@ -216,21 +250,103 @@ static unsigned char fontset[80] =
     }
 }
 
+- (void)handle00XXOpcodes {
+    
+    NSString *errorMessage = [NSString stringWithFormat:@"Error: Opcode %x not found", opcode];
+    
+    switch (opcode & 0x00FF) {
+            
+        case 0x00EE:
+            [self dlogPrintOpcode];
+            [self dclone];
+            sp = sp - 1;
+            pc = stack[sp];
+            pc = pc + 2;
+            [self dlogAffecteds];
+            break;
+        default:
+            [self interruptWithMessage:errorMessage];
+            break;
+    }
+}
+
+- (void)handleEXXXOpcodes {
+    
+    NSString *errorMessage = [NSString stringWithFormat:@"Error: Opcode %x not found", opcode];
+    
+    switch (opcode & 0xF0FF) {
+        case 0xE0A1:
+            // Skips the next instruction if the key stored in VX isn't pressed.
+            [self dlogPrintOpcode];
+            [self dclone];
+            if (!key[opcode & 0x0F00 >> 8]) pc = pc + 2;
+            pc = pc + 2;
+            [self dlogAffecteds];
+            break;
+            
+        default:
+            break;
+    }
+    
+}
+
 - (void)handleFXXXOpcodes {
 
     NSString *errorMessage = [NSString stringWithFormat:@"Error: Opcode %x not found", opcode];
     
     switch (opcode & 0xF0FF) {
-            /* Stores the Binary-coded decimal representation of VX, with the most significant of three digits at the address in I, the middle digit at I plus 1, and the least significant digit at I plus 2. (In other words, take the decimal representation of VX, place the hundreds digit in memory at location in I, the tens digit at location I+1, and the ones digit at location I+2.)
-             */
+            
+        case 0xF007:
+            //Sets the VX to delay timer
+            [self dlogPrintOpcode];
+            [self dclone];
+            V[(opcode & 0x0F00) >> 8] = delay_timer;
+            pc = pc + 2;
+            [self dlogAffecteds];
+            break;
+
+
+        case 0xF015:
+            //Sets the delay timer to VX
+            [self dlogPrintOpcode];
+            [self dclone];
+            delay_timer = V[(opcode & 0x0F00) >> 8];
+            pc = pc + 2;
+            [self dlogAffecteds];
+            break;
 
         case 0xF033:
+            /* Stores the Binary-coded decimal representation of VX, with the most significant of three digits at the address in I, the middle digit at I plus 1, and the least significant digit at I plus 2. (In other words, take the decimal representation of VX, place the hundreds digit in memory at location in I, the tens digit at location I+1, and the ones digit at location I+2.)
+             */
             [self dlogPrintOpcode];
             [self dclone];
             
             memory[i] = V[opcode & 0x0F00 >> 8] / 100;
             memory[i+1] = (V[opcode & 0x0F00 >> 8] / 10) % 10;
             memory[i+2] = (V[opcode & 0x0F00 >> 8] / 1) % 10;
+            pc = pc + 2;
+            [self dlogAffecteds];
+            break;
+            
+        case 0xF029:
+            /* Sets I to the location of the sprite for the character in VX. Characters 0-F (in hexadecimal) are represented by a 4x5 font.
+             FX33 	Stores the Binary-coded decimal representation of VX, with the most significant of three digits at the address in I, the middle digit at I plus 1, and the least significant digit at I plus 2. (In other words, take the decimal representation of VX, place the hundreds digit in memory at location in I, the tens digit at location I+1, and the ones digit at location
+             */
+            [self dlogPrintOpcode];
+            [self dclone];
+            
+            i = (opcode & 0x0F00 >> 8) * 5;
+            pc = pc + 2;
+            [self dlogAffecteds];
+            break;
+            
+        case 0xF065:
+            // Fills V0 to VX with values from memory starting at address I
+            [self dlogPrintOpcode];
+            [self dclone];
+            for (int pos = 0; pos < (opcode & 0x0F00) >> 8; pos++) {
+                V[pos] = memory[i+pos];
+            }
             pc = pc + 2;
             [self dlogAffecteds];
             break;
