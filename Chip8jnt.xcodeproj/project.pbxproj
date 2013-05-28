@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		56542F0A17552FB300BFA0CB /* Opcode.m in Sources */ = {isa = PBXBuildFile; fileRef = 56542F0917552FB300BFA0CB /* Opcode.m */; };
 		566A50061752866A00A90940 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 566A50051752866A00A90940 /* UIKit.framework */; };
 		566A50081752866A00A90940 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 566A50071752866A00A90940 /* Foundation.framework */; };
 		566A500A1752866A00A90940 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 566A50091752866A00A90940 /* CoreGraphics.framework */; };
@@ -26,6 +27,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		56542F0817552FB300BFA0CB /* Opcode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Opcode.h; sourceTree = "<group>"; };
+		56542F0917552FB300BFA0CB /* Opcode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Opcode.m; sourceTree = "<group>"; };
 		566A50021752866A00A90940 /* Chip8jnt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chip8jnt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		566A50051752866A00A90940 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		566A50071752866A00A90940 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -129,6 +132,8 @@
 			children = (
 				566A502917529F1000A90940 /* Chip8.h */,
 				566A502A17529F1000A90940 /* Chip8.m */,
+				56542F0817552FB300BFA0CB /* Opcode.h */,
+				56542F0917552FB300BFA0CB /* Opcode.m */,
 			);
 			name = CPU;
 			sourceTree = "<group>";
@@ -234,6 +239,7 @@
 				566A502B17529F1000A90940 /* Chip8.m in Sources */,
 				566A50341752BA2700A90940 /* Chip8jntUtils.m in Sources */,
 				569351E41754072E00911B2A /* Chip8Canvas.m in Sources */,
+				56542F0A17552FB300BFA0CB /* Opcode.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

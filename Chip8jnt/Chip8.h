@@ -8,15 +8,18 @@
 
 #import <Foundation/Foundation.h>
 #import "Chip8Canvas.h"
+#import "Chip8jntUtils.h"
+#import "Opcode.h"
+
 
 @interface Chip8 : NSObject {
-
+    
     unsigned short opcode;
     unsigned char memory[4096]; // Chip-8 has a 4k memory
     unsigned char V[16]; // Chip-8 has 16 registers
     unsigned short i; // Index register
     unsigned short pc; // program counter register
-    unsigned char gfx[64*32]; // Chip-8 has a monocromatic display 64x32 = 2048 px
+    unsigned short gfx[64*32]; // Chip-8 has a monocromatic display 64x32 = 2048 px
     unsigned char delay_timer; // 60 to zero (Chip-8 runs at 60htz)
     unsigned char sound_timer; // 60 to zero; play a beep when timer reaches zero.
     
@@ -30,7 +33,6 @@
     unsigned char d_V[16];
     unsigned short d_i;
     unsigned short d_pc;
-    unsigned char d_gfx[64*32];
     unsigned char d_delay_timer;
     unsigned char d_sound_timer;
     
@@ -42,6 +44,7 @@
 }
 
 @property(nonatomic, strong) Chip8Canvas *canvas; // Canvas for draw method
+@property(nonatomic, strong) Opcode *op; // Smart opcode object;
 
 - (void) startWithRom:(NSString*)rom_name; // Start emulator cycle with a specific rom
 
@@ -50,6 +53,8 @@
 - (void)initialize; // Reset all registers and memory;
 
 - (void)cycle; // Run a emulation cycle
+
+- (void)step; // pc = pc + 2: runs the program counter;
 
 - (void)setKeys; // Turn on or off the registers keys;
 
@@ -86,4 +91,7 @@
 - (void)resetKeys; // Reset the keys state input.
 - (void)resetVRegisters; // Reset all V registers [V0 - V16]
 - (void)resetMemory; // Reset all the mmemory;
+
+- (void)copyGFXinCanvas; // We make a copy from local DFX to Canvas;
+- (void) executeDXYN;
 @end

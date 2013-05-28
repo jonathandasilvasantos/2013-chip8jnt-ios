@@ -8,6 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
+#define GFX_WIDTH 64
+#define GFX_INDEXOF(x,y) ((y*GFX_WIDTH) + x)
+
 @interface Chip8jntUtils : NSObject
 
 - (void)listAllRoms; // List in console all avaliable roms

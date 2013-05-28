@@ -8,6 +8,7 @@
 
 #import "Chip8.h"
 
+
 static unsigned char fontset[80] =
 {
     0xF0, 0x90, 0x90, 0x90, 0xF0, // 0
@@ -35,7 +36,7 @@ static unsigned char fontset[80] =
 - (void) startWithRom:(NSString*)rom_name {
     
     // We turn on the debug mode
-    debug = NO;
+    debug = YES;
     
     // First, we need to initialize the cpu
     [self initialize];
@@ -43,11 +44,8 @@ static unsigned char fontset[80] =
     // Load the rom file
     [self loadGame:rom_name];
 
-    for(int kk=0; kk<2000; kk++) {
-        [self cycle];
-    }
-    [self dlogCurrentState];
-    
+
+   [self cycle];
 }
 
 - (void)loadGame:(NSString*)rom_name {
@@ -83,12 +81,15 @@ static unsigned char fontset[80] =
     i = 0; // Reset the index register.
     sp = 0; // Reset the stack pointer current level.
     
+    self.op = [[Opcode alloc] initWithOpcode:opcode]; // create a opcode smart object;
+    
     [self resetDisplay]; // Reset the display.
     [self resetVRegisters]; // Reset all V registers.
     [self resetStack]; // Reset all stack
     [self resetKeys]; // Reset all keys state
     [self resetMemory]; // Reset all memory of Chip-8
-        [self.canvas setGFX:gfx];
+    
+    
     
 }
 
@@ -139,12 +140,17 @@ static unsigned char fontset[80] =
 - (void)cycle {
     
     opcode = memory[pc] << 8 | memory[pc + 1];
+    [self.op setOpcode:opcode];
+    [self.op recreate];
+    
+    [self dlogPrintOpcode];
+    [self dclone];
     [self executeOpcode];
+    [self dlogAffecteds];
+    
     [self handleTimers];
 
-
-    
-//    [self performSelector:@selector(cycle) withObject:nil afterDelay:0.01];
+    [self performSelector:@selector(cycle) withObject:nil afterDelay:0.01];
 }
 - (void)handleTimers {
     
@@ -158,6 +164,11 @@ static unsigned char fontset[80] =
 
 - (void)beep {
     NSLog(@"Beep!");
+}
+
+// Do a step in program counter.
+- (void)step {
+    pc = pc + 2;
 }
 
 // We identify and execute the current opcode
@@ -176,55 +187,42 @@ static unsigned char fontset[80] =
             
         case 0x1000:
             // Jumps to address NNN.
-            [self dlogPrintOpcode];
-            [self dclone];
-            pc = opcode & 0x0FFF;
-            [self dlogAffecteds];
+            pc = self.op.address;
             break;
             
         case 0x2000:
             // Calls subroutine at NNN.
-            [self dlogPrintOpcode];
-            [self dclone];
+            if (sp >= 15) {
+                NSLog(@"Error: Stack overflow.");
+                break;
+            }
             stack[sp] = pc;
+            pc = self.op.address;
             sp++;
-            pc = opcode & 0x0FFF;
-            [self dlogAffecteds];
             break;
             
         case 0x3000:
-            [self dlogPrintOpcode];
-            [self dclone];
-            if( (V[opcode & 0x0F00] >> 8) == (opcode & 0x00FF) ) pc = pc + 2;
-            pc = pc + 2;
-            [self dlogAffecteds];
+            // Skips the next instruction if VX == NN
+            if(V[self.op.x] == self.op.bit8) [self step];
+            [self step];
             break;
             
         case 0x4000:
-            // Skips the next instruction if VX doesn't equal NN.
-            [self dlogPrintOpcode];
-            [self dclone];
-            if( V[(opcode & 0x0F00) >> 8] != (opcode & 0x00FF) ) pc = pc + 2;
-            pc = pc + 2;
-            [self dlogAffecteds];
+            // Skips the next instruction if VX != NN
+            if(V[self.op.x] != self.op.bit8) [self step];
+            [self step];
             break;
             
         case 0x6000:
             // Sets VX to NN.
-            [self dclone];
-            [self dlogPrintOpcode];
-            V[(opcode & 0x0F00) >> 8] = opcode & 0x00FF;
-            pc = pc + 2;
-            [self dlogAffecteds];
+            V[self.op.x] = self.op.bit8;
+            [self step];
             break;
             
         case 0x7000:
             // Sets VX to NN.
-            [self dclone];
-            [self dlogPrintOpcode];
-            V[ (opcode & 0x0F00) >> 8] = V[(opcode & 0x0F00) >> 8] + opcode & 0x00FF;
-            pc = pc + 2;
-            [self dlogAffecteds];
+            V[self.op.x] += self.op.bit8;
+            [self step];
             break;
             
         case 0x8000:
@@ -233,47 +231,18 @@ static unsigned char fontset[80] =
             
         case 0xA000:
             // Sets i to the address NNN
-            [self dlogPrintOpcode];
-            [self dclone];
-            i = opcode & 0x0FFF;
-            pc = pc + 2;
-            [self dlogAffecteds];
+            i = self.op.address;
+            [self step];
             break;
             
         case 0xC000:
-            [self dlogPrintOpcode];
-            [self dclone];
-            V[(opcode & 0x0F00) >> 8] = 9 & (opcode & 0x00FF);
-            pc = pc + 2;
-            [self dlogAffecteds];
+            // Sets VX to a random number and NN
+            V[self.op.x] = (rand() % 0xFF) & self.op.bit8;
             break;
             
         case 0xD000:
-            [self dlogPrintOpcode];
-            [self dclone];
-            
-            x = (opcode & 0x0F00) >> 8;
-            y = (opcode & 0x00F0) >> 4;
-            height = (opcode & 0x000F);
-            
-            V[0xF] = 0;
-            for (int yline = 0; yline < height; yline++)
-            {
-                pixel = memory[i + yline];
-                for(int xline = 0; xline < 8; xline++)
-                {
-                    if((pixel & (0x80 >> xline)) != 0)
-                    {
-                        if(gfx[(x + xline + ((y + yline) * 64))] == 1)
-                            V[0xF] = 1;
-                        gfx[x + xline + ((y + yline) * 64)] ^= 1;
-                    }
-                }
-            }
-            pc = pc + 2;
-            [self.canvas setNeedsDisplay];
-            [self dlogAffecteds];
-            
+            [self executeDXYN];
+            [self step];
             break;
             
         case 0xE000:
@@ -414,7 +383,6 @@ static unsigned char fontset[80] =
             pc = stack[sp];
             pc = pc + 2;
             [self dlogAffecteds];
-            debug = NO;
             break;
         default:
             [self interruptWithMessage:errorMessage];
@@ -554,11 +522,6 @@ static unsigned char fontset[80] =
     d_i = i;
     d_pc = pc;
     
-    // Here we clone the gfx
-    for(int pos=0; pos<(64*32); pos++) {
-        d_gfx[pos] = gfx[pos];
-    }
-    
     d_delay_timer = delay_timer;
     d_sound_timer = sound_timer;
     
@@ -595,18 +558,6 @@ static unsigned char fontset[80] =
     
     if (d_pc != pc) NSLog(@"pc changed - old: %x new: %x", d_pc, pc);
     
-    // Here we identify changes in gfx array
-    for(int pos=0; pos< (64*32); pos++) {
-        
-        int d_x, d_y; // we need to convert vetor to matriz
-        d_y = pos/64;
-        d_x = pos%64;
-        
-        if(d_gfx[pos] != gfx[pos]) {
-            NSLog(@"gfx[%d][%d] - old: %x new: %x", d_x, d_y, d_gfx[pos], gfx[pos]);
-        }
-    }
-    
     if (d_delay_timer != delay_timer) NSLog(@"delay_timer changed - old: %d new: %d", d_delay_timer, delay_timer);
     
     if (d_sound_timer != sound_timer) NSLog(@"sound_timer changed - old: %d new: %d", d_sound_timer, sound_timer);
@@ -641,6 +592,43 @@ static unsigned char fontset[80] =
     
     NSLog(@"%@", message);
     
+}
+
+- (void)copyGFXinCanvas {
+    for(int x = 0; x<64; x++) {
+        for(int y = 0; y<32; y++) {
+            [self.canvas setPixel:x y:y value:gfx[GFX_INDEXOF(x, y)] ];
+        }
+    }
+}
+
+- (void) executeDXYN {
+    short xp = V[(opcode & 0x0F00) >> 8];
+    short yp = V[(opcode & 0x00F0) >> 4];
+    short h = opcode & 0x000F;
+    
+
+    V[0xF] = 0x0;
+    for (int y = i; y < i + h; y++) {
+        short row = memory[y];
+        
+        for (int x = 0; x < 8; x++) {
+            short new_pixel = (row >> (7 - x)) & 1;
+            short _x = xp + x;
+            short _y = yp + y - i;
+            if (_x >= 64 || _y >= 32)
+                continue;
+            if (new_pixel) {
+                if ( gfx[GFX_INDEXOF(_x, _y)] == 1)
+                    V[0xF] = 0x1;
+                
+                gfx[GFX_INDEXOF(_x, _y)] = !gfx[GFX_INDEXOF(_x, _y)];
+                
+            }
+        }
+    }
+    [self copyGFXinCanvas];
+    [self.canvas setNeedsDisplay];
 }
 
 @end

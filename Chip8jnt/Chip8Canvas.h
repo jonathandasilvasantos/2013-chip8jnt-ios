@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Chip8jntUtils.h"
 
 @interface Chip8Canvas : UIView {
-    unsigned char *gfx;
+    unsigned short gfx[64*32];
 }
 
-- (void)setGFX:(unsigned char*)array;
+- (void)setPixel:(unsigned int)x y:(unsigned int)y value:(unsigned short)value;
 @end
