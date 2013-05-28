@@ -38,7 +38,7 @@
         y = pos/64;
         x = pos%64;
 
-        CGRect rectangle = CGRectMake(x*4,y*4,4,4);
+        CGRect rectangle = CGRectMake(100+ (x*4),y*4,4,4);
         if(pixel != 0) CGContextAddRect(context, rectangle);
     }
     CGContextStrokePath(context);

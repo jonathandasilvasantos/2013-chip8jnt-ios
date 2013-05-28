@@ -35,7 +35,7 @@ static unsigned char fontset[80] =
 - (void) startWithRom:(NSString*)rom_name {
     
     // We turn on the debug mode
-//    debug = YES;
+    debug = NO;
     
     // First, we need to initialize the cpu
     [self initialize];
@@ -43,8 +43,10 @@ static unsigned char fontset[80] =
     // Load the rom file
     [self loadGame:rom_name];
 
-    [self cycle];
-
+    for(int kk=0; kk<2000; kk++) {
+        [self cycle];
+    }
+    [self dlogCurrentState];
     
 }
 
@@ -86,6 +88,7 @@ static unsigned char fontset[80] =
     [self resetStack]; // Reset all stack
     [self resetKeys]; // Reset all keys state
     [self resetMemory]; // Reset all memory of Chip-8
+        [self.canvas setGFX:gfx];
     
 }
 
@@ -138,10 +141,10 @@ static unsigned char fontset[80] =
     opcode = memory[pc] << 8 | memory[pc + 1];
     [self executeOpcode];
     [self handleTimers];
-    [self.canvas setGFX:gfx];
-//    [self.canvas setNeedsDisplay];
 
-    [self performSelector:@selector(cycle) withObject:nil afterDelay:0.01];
+
+    
+//    [self performSelector:@selector(cycle) withObject:nil afterDelay:0.01];
 }
 - (void)handleTimers {
     
@@ -192,7 +195,7 @@ static unsigned char fontset[80] =
         case 0x3000:
             [self dlogPrintOpcode];
             [self dclone];
-            if( V[opcode & 0x0F00] >> 8 == (opcode & 0x00FF) ) pc = pc + 2;
+            if( (V[opcode & 0x0F00] >> 8) == (opcode & 0x00FF) ) pc = pc + 2;
             pc = pc + 2;
             [self dlogAffecteds];
             break;
@@ -201,7 +204,7 @@ static unsigned char fontset[80] =
             // Skips the next instruction if VX doesn't equal NN.
             [self dlogPrintOpcode];
             [self dclone];
-            if( V[opcode & 0x0F00 >> 8] != (opcode & 0x00FF) ) pc = pc + 2;
+            if( V[(opcode & 0x0F00) >> 8] != (opcode & 0x00FF) ) pc = pc + 2;
             pc = pc + 2;
             [self dlogAffecteds];
             break;
@@ -210,7 +213,7 @@ static unsigned char fontset[80] =
             // Sets VX to NN.
             [self dclone];
             [self dlogPrintOpcode];
-            V[opcode & 0x0F00 >> 8] = opcode & 0x00FF;
+            V[(opcode & 0x0F00) >> 8] = opcode & 0x00FF;
             pc = pc + 2;
             [self dlogAffecteds];
             break;
@@ -219,7 +222,7 @@ static unsigned char fontset[80] =
             // Sets VX to NN.
             [self dclone];
             [self dlogPrintOpcode];
-            V[opcode & 0x0F00 >> 8] = V[opcode & 0x0F00 >> 8] + opcode & 0x00FF;
+            V[ (opcode & 0x0F00) >> 8] = V[(opcode & 0x0F00) >> 8] + opcode & 0x00FF;
             pc = pc + 2;
             [self dlogAffecteds];
             break;
@@ -240,7 +243,7 @@ static unsigned char fontset[80] =
         case 0xC000:
             [self dlogPrintOpcode];
             [self dclone];
-            V[opcode & 0x0F00 >> 8] = arc4random()%10 & (opcode & 0x00FF);
+            V[(opcode & 0x0F00) >> 8] = 9 & (opcode & 0x00FF);
             pc = pc + 2;
             [self dlogAffecteds];
             break;
@@ -249,9 +252,9 @@ static unsigned char fontset[80] =
             [self dlogPrintOpcode];
             [self dclone];
             
-            x = opcode & 0x0F00 >> 8;
-            y = opcode & 0x00F0 >> 4;
-            height = opcode & 0x000F;
+            x = (opcode & 0x0F00) >> 8;
+            y = (opcode & 0x00F0) >> 4;
+            height = (opcode & 0x000F);
             
             V[0xF] = 0;
             for (int yline = 0; yline < height; yline++)
@@ -299,7 +302,7 @@ static unsigned char fontset[80] =
             //Sets VX to the value of VY.
             [self dlogPrintOpcode];
             [self dclone];
-            V[opcode & 0x0F00 >> 8] = V[opcode & 0x00F0 >> 4];
+            V[(opcode & 0x0F00) >> 8] = V[(opcode & 0x00F0) >> 4];
             pc = pc + 2;
             [self dlogAffecteds];
             break;
@@ -308,7 +311,7 @@ static unsigned char fontset[80] =
             //Sets VX to VX or VY
             [self dlogPrintOpcode];
             [self dclone];
-            V[opcode & 0x0F00 >> 8] = V[opcode & 0x0F00 >> 8] | V[opcode & 0x00F0 >> 4];
+            V[(opcode & 0x0F00) >> 8] = V[(opcode & 0x0F00) >> 8] | V[(opcode & 0x00F0) >> 4];
             pc = pc + 2;
             [self dlogAffecteds];
             break;
@@ -317,7 +320,7 @@ static unsigned char fontset[80] =
             //Sets VX to VX and VY
             [self dlogPrintOpcode];
             [self dclone];
-            V[opcode & 0x0F00 >> 8] = V[opcode & 0x0F00 >> 8] & V[opcode & 0x00F0 >> 4];
+            V[(opcode & 0x0F00) >> 8] = V[(opcode & 0x0F00) >> 8] & V[(opcode & 0x00F0) >> 4];
             pc = pc + 2;
             [self dlogAffecteds];
             break;
@@ -326,7 +329,7 @@ static unsigned char fontset[80] =
             //Sets VX to VX xor VY
             [self dlogPrintOpcode];
             [self dclone];
-            V[opcode & 0x0F00 >> 8] = V[opcode & 0x0F00 >> 8] ^ V[opcode & 0x00F0 >> 4];
+            V[(opcode & 0x0F00) >> 8] = V[(opcode & 0x0F00) >> 8] ^ V[(opcode & 0x00F0) >> 4];
             pc = pc + 2;
             [self dlogAffecteds];
             break;
@@ -335,8 +338,8 @@ static unsigned char fontset[80] =
             // Adds VY to VX. VF is set to 1 when there's a carry, and to 0 when there isn't.
             [self dlogPrintOpcode];
             [self dclone];
-            x = opcode & 0x0F00 >> 8;
-            y = opcode & 0x00F0 >> 4;
+            x = V[(opcode & 0x0F00) >> 8];
+            y = V[(opcode & 0x00F0) >> 4];
             
             V[x] = V[x] + V[y];
             V[0xF] = 0;
@@ -349,8 +352,8 @@ static unsigned char fontset[80] =
             // VY is subtracted from VX. VF is set to 0 when there's a borrow, and 1 when there isn't.
             [self dlogPrintOpcode];
             [self dclone];
-            x = opcode & 0x0F00 >> 8;
-            y = opcode & 0x00F0 >> 4;
+            x = V[(opcode & 0x0F00) >> 8];
+            y = V[(opcode & 0x00F0) >> 4];
             V[x] = V[x] - V[y];
             V[0xF] = 0;
             if(x > y) V[0xF] = 1;
@@ -359,12 +362,11 @@ static unsigned char fontset[80] =
             break;
             
         case 0x8006:
-            // Need to be checked.
             // Shifts VX right by one. VF is set to the value of the least significant bit of VX before the shift.
             [self dlogPrintOpcode];
             [self dclone];
-            V[0xF] = V[opcode & 0x0F00 >> 8] & 0x000F;
-            V[opcode & 0x0F00 >> 8] = V[opcode & 0x0F00 >> 8] >> 1;
+            V[0xF] = V[(opcode & 0x0F00) >> 8] & 0x000F;
+            V[(opcode & 0x0F00) >> 8] >>=1;
             pc = pc + 2;
             [self dlogAffecteds];
             break;
@@ -374,8 +376,8 @@ static unsigned char fontset[80] =
             [self dlogPrintOpcode];
             [self dclone];
             V[0xF] = 1;
-            if(V[opcode & 0x00F0 >> 4] < V[opcode & 0x0F00 >> 8]) V[0xF] = 0;
-            V[opcode & 0x0F00 >> 8] = V[opcode & 0x00F0 >> 4] - V[opcode & 0x0F00 >> 8];
+            if(V[(opcode & 0x00F0) >> 4] < V[(opcode & 0x0F00) >> 8]) V[0xF] = 0;
+            V[(opcode & 0x0F00) >> 8] = V[(opcode & 0x00F0) >> 4] - V[(opcode & 0x0F00) >> 8];
             pc = pc + 2;
             [self dlogAffecteds];
             break;
@@ -385,8 +387,9 @@ static unsigned char fontset[80] =
             // Shifts VX left by one. VF is set to the value of the most significant bit of VX before the shift
             [self dlogPrintOpcode];
             [self dclone];
-            V[0xF] = V[opcode & 0x0F00 >> 8] & 0xF000;
-            V[opcode & 0x0F00 >> 8] = V[opcode & 0x0F00 >> 8] << 1;
+            V[0xF] = V[(opcode & 0x0F00) >> 8] & 0x80;
+            V[(opcode & 0x0F00) >> 8] = V[(opcode & 0x0F00) >> 8] << 1;
+            
             pc = pc + 2;
             [self dlogAffecteds];
             break;
@@ -404,12 +407,14 @@ static unsigned char fontset[80] =
     switch (opcode & 0x00FF) {
             
         case 0x00EE:
+            debug = YES;
             [self dlogPrintOpcode];
             [self dclone];
             sp = sp - 1;
             pc = stack[sp];
             pc = pc + 2;
             [self dlogAffecteds];
+            debug = NO;
             break;
         default:
             [self interruptWithMessage:errorMessage];
@@ -426,7 +431,7 @@ static unsigned char fontset[80] =
             // Skips the next instruction if the key stored in VX isn't pressed.
             [self dlogPrintOpcode];
             [self dclone];
-            if (!key[opcode & 0x0F00 >> 8]) pc = pc + 2;
+            if (!key[(opcode & 0x0F00) >> 8]) pc = pc + 2;
             pc = pc + 2;
             [self dlogAffecteds];
             break;
@@ -467,7 +472,7 @@ static unsigned char fontset[80] =
             // Sets the sound timer to VX.
             [self dlogPrintOpcode];
             [self dclone];
-            sound_timer = V[opcode & 0x0F00 >> 8];
+            sound_timer = V[(opcode & 0x0F00) >> 8];
             pc = pc + 2;
             [self dlogAffecteds];
             break;
@@ -478,9 +483,9 @@ static unsigned char fontset[80] =
             [self dlogPrintOpcode];
             [self dclone];
             
-            memory[i] = V[opcode & 0x0F00 >> 8] / 100;
-            memory[i+1] = (V[opcode & 0x0F00 >> 8] / 10) % 10;
-            memory[i+2] = (V[opcode & 0x0F00 >> 8] / 1) % 10;
+            memory[i] = V[(opcode & 0x0F00) >> 8] / 100;
+            memory[i+1] = (V[(opcode & 0x0F00) >> 8] / 10) % 10;
+            memory[i+2] = (V[(opcode & 0x0F00) >> 8] / 1) % 10;
             pc = pc + 2;
             [self dlogAffecteds];
             break;
@@ -491,8 +496,7 @@ static unsigned char fontset[80] =
              */
             [self dlogPrintOpcode];
             [self dclone];
-            
-            i = (opcode & 0x0F00 >> 8) * 5;
+            i = V[((opcode & 0x0F00) >> 8)] * 5;
             pc = pc + 2;
             [self dlogAffecteds];
             break;
@@ -583,7 +587,7 @@ static unsigned char fontset[80] =
     // Here we identify changes in V's registers
     for(int pos=0; pos<16; pos++) {
         if(d_V[pos] != V[pos]) {
-            NSLog(@"V%d - old: %x new: %x", pos, d_V[pos], V[pos]);
+            NSLog(@"V%x - old: %x new: %x", pos, d_V[pos], V[pos]);
         }
     }
     
@@ -628,6 +632,7 @@ static unsigned char fontset[80] =
 
 - (void)dlogPrintOpcode {
     if(!debug) return;
+    NSLog(@"\n");
     NSLog(@"Current upcode: %x", opcode);
 }
 
