@@ -36,7 +36,7 @@ static unsigned char fontset[80] =
 - (void) startWithRom:(NSString*)rom_name {
     
     // We turn on the debug mode
-    debug = YES;
+    debug = NO;
     
     // First, we need to initialize the cpu
     [self initialize];
@@ -88,9 +88,11 @@ static unsigned char fontset[80] =
     [self resetStack]; // Reset all stack
     [self resetKeys]; // Reset all keys state
     [self resetMemory]; // Reset all memory of Chip-8
+
+    sound_timer = 60;
+    delay_timer = 60;
     
-    
-    
+    [self loadFontSet];
 }
 
 // Here we load the font set in memory
@@ -143,23 +145,27 @@ static unsigned char fontset[80] =
     [self.op setOpcode:opcode];
     [self.op recreate];
     
-    [self dlogPrintOpcode];
-    [self dclone];
+//    [self dlogPrintOpcode];
+//    [self dclone];
     [self executeOpcode];
-    [self dlogAffecteds];
+//    [self dlogAffecteds];
     
     [self handleTimers];
 
-    [self performSelector:@selector(cycle) withObject:nil afterDelay:0.01];
+    [self performSelector:@selector(cycle) withObject:nil afterDelay:0.003];
+    
 }
 - (void)handleTimers {
     
     // All timers reaches zero
-    if(delay_timer > 60) delay_timer--;
-    if(sound_timer > 60) sound_timer--;
+    if(delay_timer > 0) {
+        delay_timer--;
+    }
     
-    // When sound timer reaches one; Chip-8 plays a beep.
-    if(sound_timer == 1) [self beep];
+    if(sound_timer > 0) {
+        sound_timer--;
+    }
+
 }
 
 - (void)beep {
@@ -229,6 +235,13 @@ static unsigned char fontset[80] =
             [self handle8XXXOpcodes];
             break;
             
+        case 0x9000:
+            // Skips next instruction if VX != VY
+            if (V[self.op.x] != V[self.op.y]) [self step];
+            [self step];
+            break;
+            
+            
         case 0xA000:
             // Sets i to the address NNN
             i = self.op.address;
@@ -237,7 +250,8 @@ static unsigned char fontset[80] =
             
         case 0xC000:
             // Sets VX to a random number and NN
-            V[self.op.x] = (rand() % 0xFF) & self.op.bit8;
+            V[self.op.x] = (arc4random() % 0xFF) & self.op.bit8;
+            [self step];
             break;
             
         case 0xD000:
@@ -269,98 +283,65 @@ static unsigned char fontset[80] =
             
         case 0x8000:
             //Sets VX to the value of VY.
-            [self dlogPrintOpcode];
-            [self dclone];
-            V[(opcode & 0x0F00) >> 8] = V[(opcode & 0x00F0) >> 4];
-            pc = pc + 2;
-            [self dlogAffecteds];
+            V[self.op.x] = V[self.op.y];
+            [self step];
             break;
             
         case 0x8001:
             //Sets VX to VX or VY
-            [self dlogPrintOpcode];
-            [self dclone];
-            V[(opcode & 0x0F00) >> 8] = V[(opcode & 0x0F00) >> 8] | V[(opcode & 0x00F0) >> 4];
-            pc = pc + 2;
-            [self dlogAffecteds];
+            V[self.op.x] = V[self.op.x] | V[self.op.x];
+            [self step];
             break;
             
         case 0x8002:
             //Sets VX to VX and VY
-            [self dlogPrintOpcode];
-            [self dclone];
-            V[(opcode & 0x0F00) >> 8] = V[(opcode & 0x0F00) >> 8] & V[(opcode & 0x00F0) >> 4];
-            pc = pc + 2;
-            [self dlogAffecteds];
+            V[self.op.x] = V[self.op.x] & V[self.op.x];
+            [self step];
             break;
             
         case 0x8003:
-            //Sets VX to VX xor VY
-            [self dlogPrintOpcode];
-            [self dclone];
-            V[(opcode & 0x0F00) >> 8] = V[(opcode & 0x0F00) >> 8] ^ V[(opcode & 0x00F0) >> 4];
-            pc = pc + 2;
-            [self dlogAffecteds];
+            // Sets VX to VX xor VY
+            V[self.op.x] = V[self.op.x] ^ V[self.op.x];
+            [self step];
             break;
             
         case 0x8004:
             // Adds VY to VX. VF is set to 1 when there's a carry, and to 0 when there isn't.
-            [self dlogPrintOpcode];
-            [self dclone];
-            x = V[(opcode & 0x0F00) >> 8];
-            y = V[(opcode & 0x00F0) >> 4];
-            
-            V[x] = V[x] + V[y];
-            V[0xF] = 0;
-            if(x + y > 255) V[0xF] = 1;
-            pc = pc + 2;
-            [self dlogAffecteds];
+            if((V[self.op.x] + V[self.op.y]) > 0xFF) V[0xF] = 1;
+            else V[0xF] = 0;
+            V[self.op.x] += V[self.op.y];
+            [self step];
             break;
             
         case 0x8005:
             // VY is subtracted from VX. VF is set to 0 when there's a borrow, and 1 when there isn't.
-            [self dlogPrintOpcode];
-            [self dclone];
-            x = V[(opcode & 0x0F00) >> 8];
-            y = V[(opcode & 0x00F0) >> 4];
-            V[x] = V[x] - V[y];
-            V[0xF] = 0;
-            if(x > y) V[0xF] = 1;
-            pc = pc + 2;
-            [self dlogAffecteds];
+            if( V[self.op.y] > V[self.op.x]) V[0xF] = 0;
+            else V[0xF] = 1;
+            V[self.op.x] -= V[self.op.y];
+            [self step];
             break;
             
         case 0x8006:
             // Shifts VX right by one. VF is set to the value of the least significant bit of VX before the shift.
-            [self dlogPrintOpcode];
-            [self dclone];
-            V[0xF] = V[(opcode & 0x0F00) >> 8] & 0x000F;
-            V[(opcode & 0x0F00) >> 8] >>=1;
-            pc = pc + 2;
-            [self dlogAffecteds];
+            V[0xF] = V[self.op.x] & 0x0001;
+            V[self.op.x] = V[self.op.x] >> 1;
+            [self step];
             break;
             
         case 0x8007:
             // Sets VX to VY minus VX. VF is set to 0 when there's a borrow, and 1 when there isn't.
-            [self dlogPrintOpcode];
-            [self dclone];
-            V[0xF] = 1;
-            if(V[(opcode & 0x00F0) >> 4] < V[(opcode & 0x0F00) >> 8]) V[0xF] = 0;
-            V[(opcode & 0x0F00) >> 8] = V[(opcode & 0x00F0) >> 4] - V[(opcode & 0x0F00) >> 8];
-            pc = pc + 2;
-            [self dlogAffecteds];
+            
+            if(V[self.op.x] > V[self.op.y]) V[0xF] = 1;
+            else V[0xF] = 0;
+            V[self.op.x] = V[self.op.y] - V[self.op.x];
+            [self step];
             break;
             
         case 0x800E:
-            // Need to be checked;
             // Shifts VX left by one. VF is set to the value of the most significant bit of VX before the shift
-            [self dlogPrintOpcode];
-            [self dclone];
-            V[0xF] = V[(opcode & 0x0F00) >> 8] & 0x80;
-            V[(opcode & 0x0F00) >> 8] = V[(opcode & 0x0F00) >> 8] << 1;
-            
-            pc = pc + 2;
-            [self dlogAffecteds];
+            V[0xF] = (V[self.op.x] >> 7) & 1;
+            V[self.op.x] = V[self.op.x] << 1;
+            [self step];
             break;
             
         default:
@@ -375,15 +356,19 @@ static unsigned char fontset[80] =
     
     switch (opcode & 0x00FF) {
             
-        case 0x00EE:
-            debug = YES;
-            [self dlogPrintOpcode];
-            [self dclone];
-            sp = sp - 1;
-            pc = stack[sp];
-            pc = pc + 2;
-            [self dlogAffecteds];
+        case 0x00E0:
+            [self resetDisplay];
+            [self step];
             break;
+            
+        case 0x00EE:
+            // Returns from a subroutine
+            sp--;
+            pc = stack[sp];
+            sp = 0;
+            [self step];
+            break;
+            
         default:
             [self interruptWithMessage:errorMessage];
             break;
@@ -397,11 +382,9 @@ static unsigned char fontset[80] =
     switch (opcode & 0xF0FF) {
         case 0xE0A1:
             // Skips the next instruction if the key stored in VX isn't pressed.
-            [self dlogPrintOpcode];
-            [self dclone];
-            if (!key[(opcode & 0x0F00) >> 8]) pc = pc + 2;
-            pc = pc + 2;
-            [self dlogAffecteds];
+
+            if((arc4random()%10) > 5) [self step];
+            [self step];
             break;
             
         default:
@@ -419,65 +402,59 @@ static unsigned char fontset[80] =
             
         case 0xF007:
             //Sets the VX to delay timer
-            [self dlogPrintOpcode];
-            [self dclone];
-            V[(opcode & 0x0F00) >> 8] = delay_timer;
-            pc = pc + 2;
-            [self dlogAffecteds];
+            V[self.op.x] = delay_timer;
+            [self step];
             break;
-
+            
+            
+        case 0xF01E:
+            // Adds VX to I
+            i += V[self.op.x];
+            [self step];
+            break;
+            
 
         case 0xF015:
-            //Sets the delay timer to VX
-            [self dlogPrintOpcode];
-            [self dclone];
-            delay_timer = V[(opcode & 0x0F00) >> 8];
-            pc = pc + 2;
-            [self dlogAffecteds];
+            // Sets the delay timer to VX
+            delay_timer = V[self.op.x];
+            [self step];
             break;
             
         case 0xF018:
             // Sets the sound timer to VX.
-            [self dlogPrintOpcode];
-            [self dclone];
-            sound_timer = V[(opcode & 0x0F00) >> 8];
-            pc = pc + 2;
-            [self dlogAffecteds];
+            sound_timer = V[self.op.x];
+            [self step];
             break;
 
         case 0xF033:
             /* Stores the Binary-coded decimal representation of VX, with the most significant of three digits at the address in I, the middle digit at I plus 1, and the least significant digit at I plus 2. (In other words, take the decimal representation of VX, place the hundreds digit in memory at location in I, the tens digit at location I+1, and the ones digit at location I+2.)
              */
-            [self dlogPrintOpcode];
-            [self dclone];
-            
-            memory[i] = V[(opcode & 0x0F00) >> 8] / 100;
-            memory[i+1] = (V[(opcode & 0x0F00) >> 8] / 10) % 10;
-            memory[i+2] = (V[(opcode & 0x0F00) >> 8] / 1) % 10;
-            pc = pc + 2;
-            [self dlogAffecteds];
+            memory[i] = V[self.op.x] / 100;
+            memory[i+1] = (V[self.op.x] / 10) % 10;
+            memory[i+2] = (V[self.op.x]) % 10;
+            [self step];
             break;
             
         case 0xF029:
             /* Sets I to the location of the sprite for the character in VX. Characters 0-F (in hexadecimal) are represented by a 4x5 font.
              FX33 	Stores the Binary-coded decimal representation of VX, with the most significant of three digits at the address in I, the middle digit at I plus 1, and the least significant digit at I plus 2. (In other words, take the decimal representation of VX, place the hundreds digit in memory at location in I, the tens digit at location I+1, and the ones digit at location
              */
-            [self dlogPrintOpcode];
-            [self dclone];
-            i = V[((opcode & 0x0F00) >> 8)] * 5;
-            pc = pc + 2;
-            [self dlogAffecteds];
+            i = V[self.op.x] * 5;
+            [self step];
+            break;
+
+        case 0xF055:
+            // Stores V0 to VX in memory starting at address I
+            for(int pos=0; pos<=V[self.op.x]; pos++)
+                memory[pos + i] = V[i];
+            [self step];
             break;
             
         case 0xF065:
             // Fills V0 to VX with values from memory starting at address I
-            [self dlogPrintOpcode];
-            [self dclone];
-            for (int pos = 0; pos < (opcode & 0x0F00) >> 8; pos++) {
-                V[pos] = memory[i+pos];
-            }
-            pc = pc + 2;
-            [self dlogAffecteds];
+            for(int pos = 0; pos < V[self.op.x]; pos++)
+                memory[i+pos] = V[pos];
+            [self step];
             break;
             
         default:

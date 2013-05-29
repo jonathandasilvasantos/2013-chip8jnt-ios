@@ -20,9 +20,35 @@
 		566A501F1752866B00A90940 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 566A501E1752866B00A90940 /* ViewController.m */; };
 		566A50221752866B00A90940 /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 566A50201752866B00A90940 /* ViewController.xib */; };
 		566A502B17529F1000A90940 /* Chip8.m in Sources */ = {isa = PBXBuildFile; fileRef = 566A502A17529F1000A90940 /* Chip8.m */; };
-		566A502F1752B11500A90940 /* pong.ch8 in Resources */ = {isa = PBXBuildFile; fileRef = 566A502D1752B11500A90940 /* pong.ch8 */; };
-		566A50301752B11500A90940 /* prads.ch8 in Resources */ = {isa = PBXBuildFile; fileRef = 566A502E1752B11500A90940 /* prads.ch8 */; };
 		566A50341752BA2700A90940 /* Chip8jntUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 566A50331752BA2700A90940 /* Chip8jntUtils.m */; };
+		568C95EF1755B99500C079B8 /* BMP Viewer - Hello (C8 example) [Hap, 2005].ch8 in Resources */ = {isa = PBXBuildFile; fileRef = 568C95D31755B99500C079B8 /* BMP Viewer - Hello (C8 example) [Hap, 2005].ch8 */; };
+		568C95F01755B99500C079B8 /* BMP Viewer - Hello (C8 example) [Hap, 2005].txt in Resources */ = {isa = PBXBuildFile; fileRef = 568C95D41755B99500C079B8 /* BMP Viewer - Hello (C8 example) [Hap, 2005].txt */; };
+		568C95F11755B99500C079B8 /* Chip8 emulator Logo [Garstyciuks].ch8 in Resources */ = {isa = PBXBuildFile; fileRef = 568C95D51755B99500C079B8 /* Chip8 emulator Logo [Garstyciuks].ch8 */; };
+		568C95F21755B99500C079B8 /* Chip8 Picture.ch8 in Resources */ = {isa = PBXBuildFile; fileRef = 568C95D61755B99500C079B8 /* Chip8 Picture.ch8 */; };
+		568C95F31755B99500C079B8 /* Clock Program [Bill Fisher, 1981].ch8 in Resources */ = {isa = PBXBuildFile; fileRef = 568C95D71755B99500C079B8 /* Clock Program [Bill Fisher, 1981].ch8 */; };
+		568C95F41755B99500C079B8 /* Clock Program [Bill Fisher, 1981].txt in Resources */ = {isa = PBXBuildFile; fileRef = 568C95D81755B99500C079B8 /* Clock Program [Bill Fisher, 1981].txt */; };
+		568C95F51755B99500C079B8 /* Delay Timer Test [Matthew Mikolay, 2010].ch8 in Resources */ = {isa = PBXBuildFile; fileRef = 568C95D91755B99500C079B8 /* Delay Timer Test [Matthew Mikolay, 2010].ch8 */; };
+		568C95F61755B99500C079B8 /* Delay Timer Test [Matthew Mikolay, 2010].txt in Resources */ = {isa = PBXBuildFile; fileRef = 568C95DA1755B99500C079B8 /* Delay Timer Test [Matthew Mikolay, 2010].txt */; };
+		568C95F71755B99500C079B8 /* Division Test [Sergey Naydenov, 2010].ch8 in Resources */ = {isa = PBXBuildFile; fileRef = 568C95DB1755B99500C079B8 /* Division Test [Sergey Naydenov, 2010].ch8 */; };
+		568C95F81755B99500C079B8 /* Fishie [Hap, 2005].ch8 in Resources */ = {isa = PBXBuildFile; fileRef = 568C95DC1755B99500C079B8 /* Fishie [Hap, 2005].ch8 */; };
+		568C95F91755B99500C079B8 /* Fishie [Hap, 2005].txt in Resources */ = {isa = PBXBuildFile; fileRef = 568C95DD1755B99500C079B8 /* Fishie [Hap, 2005].txt */; };
+		568C95FA1755B99500C079B8 /* Framed MK1 [GV Samways, 1980].ch8 in Resources */ = {isa = PBXBuildFile; fileRef = 568C95DE1755B99500C079B8 /* Framed MK1 [GV Samways, 1980].ch8 */; };
+		568C95FB1755B99500C079B8 /* Framed MK1 [GV Samways, 1980].txt in Resources */ = {isa = PBXBuildFile; fileRef = 568C95DF1755B99500C079B8 /* Framed MK1 [GV Samways, 1980].txt */; };
+		568C95FC1755B99500C079B8 /* Framed MK2 [GV Samways, 1980].ch8 in Resources */ = {isa = PBXBuildFile; fileRef = 568C95E01755B99500C079B8 /* Framed MK2 [GV Samways, 1980].ch8 */; };
+		568C95FD1755B99500C079B8 /* Framed MK2 [GV Samways, 1980].txt in Resources */ = {isa = PBXBuildFile; fileRef = 568C95E11755B99500C079B8 /* Framed MK2 [GV Samways, 1980].txt */; };
+		568C95FE1755B99500C079B8 /* IBM Logo.ch8 in Resources */ = {isa = PBXBuildFile; fileRef = 568C95E21755B99500C079B8 /* IBM Logo.ch8 */; };
+		568C95FF1755B99500C079B8 /* Jumping X and O [Harry Kleinberg, 1977].ch8 in Resources */ = {isa = PBXBuildFile; fileRef = 568C95E31755B99500C079B8 /* Jumping X and O [Harry Kleinberg, 1977].ch8 */; };
+		568C96001755B99500C079B8 /* Jumping X and O [Harry Kleinberg, 1977].txt in Resources */ = {isa = PBXBuildFile; fileRef = 568C95E41755B99500C079B8 /* Jumping X and O [Harry Kleinberg, 1977].txt */; };
+		568C96011755B99500C079B8 /* Keypad Test [Hap, 2006].ch8 in Resources */ = {isa = PBXBuildFile; fileRef = 568C95E51755B99500C079B8 /* Keypad Test [Hap, 2006].ch8 */; };
+		568C96021755B99500C079B8 /* Keypad Test [Hap, 2006].txt in Resources */ = {isa = PBXBuildFile; fileRef = 568C95E61755B99500C079B8 /* Keypad Test [Hap, 2006].txt */; };
+		568C96031755B99500C079B8 /* Life [GV Samways, 1980].ch8 in Resources */ = {isa = PBXBuildFile; fileRef = 568C95E71755B99500C079B8 /* Life [GV Samways, 1980].ch8 */; };
+		568C96041755B99500C079B8 /* Life [GV Samways, 1980].txt in Resources */ = {isa = PBXBuildFile; fileRef = 568C95E81755B99500C079B8 /* Life [GV Samways, 1980].txt */; };
+		568C96051755B99500C079B8 /* Minimal game [Revival Studios, 2007].ch8 in Resources */ = {isa = PBXBuildFile; fileRef = 568C95E91755B99500C079B8 /* Minimal game [Revival Studios, 2007].ch8 */; };
+		568C96061755B99500C079B8 /* pong.ch8 in Resources */ = {isa = PBXBuildFile; fileRef = 568C95EA1755B99500C079B8 /* pong.ch8 */; };
+		568C96071755B99500C079B8 /* prads.ch8 in Resources */ = {isa = PBXBuildFile; fileRef = 568C95EB1755B99500C079B8 /* prads.ch8 */; };
+		568C96081755B99500C079B8 /* Random Number Test [Matthew Mikolay, 2010].ch8 in Resources */ = {isa = PBXBuildFile; fileRef = 568C95EC1755B99500C079B8 /* Random Number Test [Matthew Mikolay, 2010].ch8 */; };
+		568C96091755B99500C079B8 /* Random Number Test [Matthew Mikolay, 2010].txt in Resources */ = {isa = PBXBuildFile; fileRef = 568C95ED1755B99500C079B8 /* Random Number Test [Matthew Mikolay, 2010].txt */; };
+		568C960A1755B99500C079B8 /* SQRT Test [Sergey Naydenov, 2010].ch8 in Resources */ = {isa = PBXBuildFile; fileRef = 568C95EE1755B99500C079B8 /* SQRT Test [Sergey Naydenov, 2010].ch8 */; };
 		569351E41754072E00911B2A /* Chip8Canvas.m in Sources */ = {isa = PBXBuildFile; fileRef = 569351E31754072E00911B2A /* Chip8Canvas.m */; };
 /* End PBXBuildFile section */
 
@@ -47,10 +73,36 @@
 		566A50211752866B00A90940 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController.xib; sourceTree = "<group>"; };
 		566A502917529F1000A90940 /* Chip8.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Chip8.h; sourceTree = "<group>"; };
 		566A502A17529F1000A90940 /* Chip8.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Chip8.m; sourceTree = "<group>"; };
-		566A502D1752B11500A90940 /* pong.ch8 */ = {isa = PBXFileReference; lastKnownFileType = file; path = pong.ch8; sourceTree = "<group>"; };
-		566A502E1752B11500A90940 /* prads.ch8 */ = {isa = PBXFileReference; lastKnownFileType = file; path = prads.ch8; sourceTree = "<group>"; };
 		566A50321752BA2700A90940 /* Chip8jntUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Chip8jntUtils.h; sourceTree = "<group>"; };
 		566A50331752BA2700A90940 /* Chip8jntUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Chip8jntUtils.m; sourceTree = "<group>"; };
+		568C95D31755B99500C079B8 /* BMP Viewer - Hello (C8 example) [Hap, 2005].ch8 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "BMP Viewer - Hello (C8 example) [Hap, 2005].ch8"; sourceTree = "<group>"; };
+		568C95D41755B99500C079B8 /* BMP Viewer - Hello (C8 example) [Hap, 2005].txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "BMP Viewer - Hello (C8 example) [Hap, 2005].txt"; sourceTree = "<group>"; };
+		568C95D51755B99500C079B8 /* Chip8 emulator Logo [Garstyciuks].ch8 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Chip8 emulator Logo [Garstyciuks].ch8"; sourceTree = "<group>"; };
+		568C95D61755B99500C079B8 /* Chip8 Picture.ch8 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Chip8 Picture.ch8"; sourceTree = "<group>"; };
+		568C95D71755B99500C079B8 /* Clock Program [Bill Fisher, 1981].ch8 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Clock Program [Bill Fisher, 1981].ch8"; sourceTree = "<group>"; };
+		568C95D81755B99500C079B8 /* Clock Program [Bill Fisher, 1981].txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Clock Program [Bill Fisher, 1981].txt"; sourceTree = "<group>"; };
+		568C95D91755B99500C079B8 /* Delay Timer Test [Matthew Mikolay, 2010].ch8 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Delay Timer Test [Matthew Mikolay, 2010].ch8"; sourceTree = "<group>"; };
+		568C95DA1755B99500C079B8 /* Delay Timer Test [Matthew Mikolay, 2010].txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Delay Timer Test [Matthew Mikolay, 2010].txt"; sourceTree = "<group>"; };
+		568C95DB1755B99500C079B8 /* Division Test [Sergey Naydenov, 2010].ch8 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Division Test [Sergey Naydenov, 2010].ch8"; sourceTree = "<group>"; };
+		568C95DC1755B99500C079B8 /* Fishie [Hap, 2005].ch8 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Fishie [Hap, 2005].ch8"; sourceTree = "<group>"; };
+		568C95DD1755B99500C079B8 /* Fishie [Hap, 2005].txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Fishie [Hap, 2005].txt"; sourceTree = "<group>"; };
+		568C95DE1755B99500C079B8 /* Framed MK1 [GV Samways, 1980].ch8 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Framed MK1 [GV Samways, 1980].ch8"; sourceTree = "<group>"; };
+		568C95DF1755B99500C079B8 /* Framed MK1 [GV Samways, 1980].txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Framed MK1 [GV Samways, 1980].txt"; sourceTree = "<group>"; };
+		568C95E01755B99500C079B8 /* Framed MK2 [GV Samways, 1980].ch8 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Framed MK2 [GV Samways, 1980].ch8"; sourceTree = "<group>"; };
+		568C95E11755B99500C079B8 /* Framed MK2 [GV Samways, 1980].txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Framed MK2 [GV Samways, 1980].txt"; sourceTree = "<group>"; };
+		568C95E21755B99500C079B8 /* IBM Logo.ch8 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IBM Logo.ch8"; sourceTree = "<group>"; };
+		568C95E31755B99500C079B8 /* Jumping X and O [Harry Kleinberg, 1977].ch8 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Jumping X and O [Harry Kleinberg, 1977].ch8"; sourceTree = "<group>"; };
+		568C95E41755B99500C079B8 /* Jumping X and O [Harry Kleinberg, 1977].txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Jumping X and O [Harry Kleinberg, 1977].txt"; sourceTree = "<group>"; };
+		568C95E51755B99500C079B8 /* Keypad Test [Hap, 2006].ch8 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Keypad Test [Hap, 2006].ch8"; sourceTree = "<group>"; };
+		568C95E61755B99500C079B8 /* Keypad Test [Hap, 2006].txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Keypad Test [Hap, 2006].txt"; sourceTree = "<group>"; };
+		568C95E71755B99500C079B8 /* Life [GV Samways, 1980].ch8 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Life [GV Samways, 1980].ch8"; sourceTree = "<group>"; };
+		568C95E81755B99500C079B8 /* Life [GV Samways, 1980].txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Life [GV Samways, 1980].txt"; sourceTree = "<group>"; };
+		568C95E91755B99500C079B8 /* Minimal game [Revival Studios, 2007].ch8 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Minimal game [Revival Studios, 2007].ch8"; sourceTree = "<group>"; };
+		568C95EA1755B99500C079B8 /* pong.ch8 */ = {isa = PBXFileReference; lastKnownFileType = file; path = pong.ch8; sourceTree = "<group>"; };
+		568C95EB1755B99500C079B8 /* prads.ch8 */ = {isa = PBXFileReference; lastKnownFileType = file; path = prads.ch8; sourceTree = "<group>"; };
+		568C95EC1755B99500C079B8 /* Random Number Test [Matthew Mikolay, 2010].ch8 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Random Number Test [Matthew Mikolay, 2010].ch8"; sourceTree = "<group>"; };
+		568C95ED1755B99500C079B8 /* Random Number Test [Matthew Mikolay, 2010].txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Random Number Test [Matthew Mikolay, 2010].txt"; sourceTree = "<group>"; };
+		568C95EE1755B99500C079B8 /* SQRT Test [Sergey Naydenov, 2010].ch8 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SQRT Test [Sergey Naydenov, 2010].ch8"; sourceTree = "<group>"; };
 		569351E21754072E00911B2A /* Chip8Canvas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Chip8Canvas.h; sourceTree = "<group>"; };
 		569351E31754072E00911B2A /* Chip8Canvas.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Chip8Canvas.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -115,7 +167,7 @@
 		566A500C1752866A00A90940 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				566A502C1752B11500A90940 /* roms */,
+				568C95D21755B99500C079B8 /* roms */,
 				566A500D1752866A00A90940 /* Chip8jnt-Info.plist */,
 				566A500E1752866A00A90940 /* InfoPlist.strings */,
 				566A50111752866A00A90940 /* main.m */,
@@ -138,15 +190,6 @@
 			name = CPU;
 			sourceTree = "<group>";
 		};
-		566A502C1752B11500A90940 /* roms */ = {
-			isa = PBXGroup;
-			children = (
-				566A502D1752B11500A90940 /* pong.ch8 */,
-				566A502E1752B11500A90940 /* prads.ch8 */,
-			);
-			path = roms;
-			sourceTree = SOURCE_ROOT;
-		};
 		566A50311752B9D900A90940 /* UTIL */ = {
 			isa = PBXGroup;
 			children = (
@@ -155,6 +198,41 @@
 			);
 			name = UTIL;
 			sourceTree = "<group>";
+		};
+		568C95D21755B99500C079B8 /* roms */ = {
+			isa = PBXGroup;
+			children = (
+				568C95D31755B99500C079B8 /* BMP Viewer - Hello (C8 example) [Hap, 2005].ch8 */,
+				568C95D41755B99500C079B8 /* BMP Viewer - Hello (C8 example) [Hap, 2005].txt */,
+				568C95D51755B99500C079B8 /* Chip8 emulator Logo [Garstyciuks].ch8 */,
+				568C95D61755B99500C079B8 /* Chip8 Picture.ch8 */,
+				568C95D71755B99500C079B8 /* Clock Program [Bill Fisher, 1981].ch8 */,
+				568C95D81755B99500C079B8 /* Clock Program [Bill Fisher, 1981].txt */,
+				568C95D91755B99500C079B8 /* Delay Timer Test [Matthew Mikolay, 2010].ch8 */,
+				568C95DA1755B99500C079B8 /* Delay Timer Test [Matthew Mikolay, 2010].txt */,
+				568C95DB1755B99500C079B8 /* Division Test [Sergey Naydenov, 2010].ch8 */,
+				568C95DC1755B99500C079B8 /* Fishie [Hap, 2005].ch8 */,
+				568C95DD1755B99500C079B8 /* Fishie [Hap, 2005].txt */,
+				568C95DE1755B99500C079B8 /* Framed MK1 [GV Samways, 1980].ch8 */,
+				568C95DF1755B99500C079B8 /* Framed MK1 [GV Samways, 1980].txt */,
+				568C95E01755B99500C079B8 /* Framed MK2 [GV Samways, 1980].ch8 */,
+				568C95E11755B99500C079B8 /* Framed MK2 [GV Samways, 1980].txt */,
+				568C95E21755B99500C079B8 /* IBM Logo.ch8 */,
+				568C95E31755B99500C079B8 /* Jumping X and O [Harry Kleinberg, 1977].ch8 */,
+				568C95E41755B99500C079B8 /* Jumping X and O [Harry Kleinberg, 1977].txt */,
+				568C95E51755B99500C079B8 /* Keypad Test [Hap, 2006].ch8 */,
+				568C95E61755B99500C079B8 /* Keypad Test [Hap, 2006].txt */,
+				568C95E71755B99500C079B8 /* Life [GV Samways, 1980].ch8 */,
+				568C95E81755B99500C079B8 /* Life [GV Samways, 1980].txt */,
+				568C95E91755B99500C079B8 /* Minimal game [Revival Studios, 2007].ch8 */,
+				568C95EA1755B99500C079B8 /* pong.ch8 */,
+				568C95EB1755B99500C079B8 /* prads.ch8 */,
+				568C95EC1755B99500C079B8 /* Random Number Test [Matthew Mikolay, 2010].ch8 */,
+				568C95ED1755B99500C079B8 /* Random Number Test [Matthew Mikolay, 2010].txt */,
+				568C95EE1755B99500C079B8 /* SQRT Test [Sergey Naydenov, 2010].ch8 */,
+			);
+			path = roms;
+			sourceTree = SOURCE_ROOT;
 		};
 		569351E1175406F900911B2A /* VIDEO */ = {
 			isa = PBXGroup;
@@ -221,8 +299,34 @@
 				566A501A1752866B00A90940 /* Default@2x.png in Resources */,
 				566A501C1752866B00A90940 /* Default-568h@2x.png in Resources */,
 				566A50221752866B00A90940 /* ViewController.xib in Resources */,
-				566A502F1752B11500A90940 /* pong.ch8 in Resources */,
-				566A50301752B11500A90940 /* prads.ch8 in Resources */,
+				568C95EF1755B99500C079B8 /* BMP Viewer - Hello (C8 example) [Hap, 2005].ch8 in Resources */,
+				568C95F01755B99500C079B8 /* BMP Viewer - Hello (C8 example) [Hap, 2005].txt in Resources */,
+				568C95F11755B99500C079B8 /* Chip8 emulator Logo [Garstyciuks].ch8 in Resources */,
+				568C95F21755B99500C079B8 /* Chip8 Picture.ch8 in Resources */,
+				568C95F31755B99500C079B8 /* Clock Program [Bill Fisher, 1981].ch8 in Resources */,
+				568C95F41755B99500C079B8 /* Clock Program [Bill Fisher, 1981].txt in Resources */,
+				568C95F51755B99500C079B8 /* Delay Timer Test [Matthew Mikolay, 2010].ch8 in Resources */,
+				568C95F61755B99500C079B8 /* Delay Timer Test [Matthew Mikolay, 2010].txt in Resources */,
+				568C95F71755B99500C079B8 /* Division Test [Sergey Naydenov, 2010].ch8 in Resources */,
+				568C95F81755B99500C079B8 /* Fishie [Hap, 2005].ch8 in Resources */,
+				568C95F91755B99500C079B8 /* Fishie [Hap, 2005].txt in Resources */,
+				568C95FA1755B99500C079B8 /* Framed MK1 [GV Samways, 1980].ch8 in Resources */,
+				568C95FB1755B99500C079B8 /* Framed MK1 [GV Samways, 1980].txt in Resources */,
+				568C95FC1755B99500C079B8 /* Framed MK2 [GV Samways, 1980].ch8 in Resources */,
+				568C95FD1755B99500C079B8 /* Framed MK2 [GV Samways, 1980].txt in Resources */,
+				568C95FE1755B99500C079B8 /* IBM Logo.ch8 in Resources */,
+				568C95FF1755B99500C079B8 /* Jumping X and O [Harry Kleinberg, 1977].ch8 in Resources */,
+				568C96001755B99500C079B8 /* Jumping X and O [Harry Kleinberg, 1977].txt in Resources */,
+				568C96011755B99500C079B8 /* Keypad Test [Hap, 2006].ch8 in Resources */,
+				568C96021755B99500C079B8 /* Keypad Test [Hap, 2006].txt in Resources */,
+				568C96031755B99500C079B8 /* Life [GV Samways, 1980].ch8 in Resources */,
+				568C96041755B99500C079B8 /* Life [GV Samways, 1980].txt in Resources */,
+				568C96051755B99500C079B8 /* Minimal game [Revival Studios, 2007].ch8 in Resources */,
+				568C96061755B99500C079B8 /* pong.ch8 in Resources */,
+				568C96071755B99500C079B8 /* prads.ch8 in Resources */,
+				568C96081755B99500C079B8 /* Random Number Test [Matthew Mikolay, 2010].ch8 in Resources */,
+				568C96091755B99500C079B8 /* Random Number Test [Matthew Mikolay, 2010].txt in Resources */,
+				568C960A1755B99500C079B8 /* SQRT Test [Sergey Naydenov, 2010].ch8 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

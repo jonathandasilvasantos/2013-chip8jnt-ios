@@ -52,6 +52,8 @@
 
 - (void)initialize; // Reset all registers and memory;
 
+
+
 - (void)cycle; // Run a emulation cycle
 
 - (void)step; // pc = pc + 2: runs the program counter;
