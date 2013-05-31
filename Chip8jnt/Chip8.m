@@ -43,7 +43,10 @@ static unsigned char fontset[80] =
     
     // Load the rom file
     [self loadGame:rom_name];
-
+    
+    if(debug) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"debugRefresh" object:nil];
+    }
 
    if(!debug) [self cycle];
 }
@@ -658,7 +661,7 @@ static unsigned char fontset[80] =
         [NSString stringWithFormat:@"Delay:    %x", delay_timer];
 
     if(indexPath.row == 10) cell.textLabel.text =
-        [NSString stringWithFormat:@"Opcode:    %x", opcode];
+        [NSString stringWithFormat:@"Opcode:    %x     Last:   %x", (memory[pc] << 8 | memory[pc + 1]), opcode ];
     
     if(indexPath.row == 0) cell.textLabel.text = [NSString stringWithFormat:@"%@    PC:  %x", cell.textLabel.text , pc];
     
