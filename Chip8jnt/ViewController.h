@@ -8,10 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "Chip8Canvas.h"
-
-@interface ViewController : UIViewController
+@class Chip8;
+@interface ViewController : UIViewController <UITableViewDelegate>
+@property (nonatomic, strong) Chip8 *ch8;
 @property (nonatomic, strong) IBOutlet Chip8Canvas *canvas;
+@property (nonatomic, strong) IBOutlet UITableView *debugTable;
 
--(void)bitwise;
+- (void)debugRefresh; // Request to refresh data;
+- (IBAction)debugStep:(id)sender; // Run a emulate cycle;
 
 @end

@@ -32,7 +32,7 @@
             int index = GFX_INDEXOF(x, y);
             unsigned short pixel = gfx[index];
             CGContextSetStrokeColorWithColor(context, [UIColor whiteColor].CGColor);
-            CGRect rectangle = CGRectMake((x*4),y*4,4,4);
+            CGRect rectangle = CGRectMake(x * 4, y * 4,2,2);
             if(pixel != 0) CGContextAddRect(context, rectangle);
             
             CGContextStrokePath(context);

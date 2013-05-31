@@ -7,7 +7,7 @@
 //
 
 #import "Chip8.h"
-
+#import "DebugCell.h"
 
 static unsigned char fontset[80] =
 {
@@ -36,7 +36,7 @@ static unsigned char fontset[80] =
 - (void) startWithRom:(NSString*)rom_name {
     
     // We turn on the debug mode
-    debug = NO;
+    debug = YES;
     
     // First, we need to initialize the cpu
     [self initialize];
@@ -45,7 +45,7 @@ static unsigned char fontset[80] =
     [self loadGame:rom_name];
 
 
-   [self cycle];
+   if(!debug) [self cycle];
 }
 
 - (void)loadGame:(NSString*)rom_name {
@@ -88,9 +88,6 @@ static unsigned char fontset[80] =
     [self resetStack]; // Reset all stack
     [self resetKeys]; // Reset all keys state
     [self resetMemory]; // Reset all memory of Chip-8
-
-    sound_timer = 60;
-    delay_timer = 60;
     
     [self loadFontSet];
 }
@@ -140,19 +137,30 @@ static unsigned char fontset[80] =
 
 // CPU Cycle: fetch, decode and execute opcodes
 - (void)cycle {
+
+    // Random key
+    int k = arc4random()%15;
+    key[k] = !key[k];
+    
     
     opcode = memory[pc] << 8 | memory[pc + 1];
     [self.op setOpcode:opcode];
     [self.op recreate];
-    
-//    [self dlogPrintOpcode];
-//    [self dclone];
+
+    [self dlogPrintOpcode];
+    [self dclone];
     [self executeOpcode];
-//    [self dlogAffecteds];
+//    [self dlogCurrentState];
+    [self dlogAffecteds];
     
     [self handleTimers];
 
-    [self performSelector:@selector(cycle) withObject:nil afterDelay:0.003];
+    // Make a notification to debug manager;
+    if(debug) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"debugRefresh" object:nil];
+    }
+
+    if(!debug) [self performSelector:@selector(cycle) withObject:nil afterDelay:0.005];
     
 }
 - (void)handleTimers {
@@ -181,7 +189,6 @@ static unsigned char fontset[80] =
 - (void)executeOpcode {
     
     int primaryCode = opcode & 0xF000;
-    unsigned short x, y, z, tmp, height, pixel;
     NSString *errorMessage = [NSString stringWithFormat:@"Error: Opcode %x not found", opcode];
     
     switch (primaryCode) {
@@ -209,7 +216,8 @@ static unsigned char fontset[80] =
             
         case 0x3000:
             // Skips the next instruction if VX == NN
-            if(V[self.op.x] == self.op.bit8) [self step];
+            if(V[self.op.x] == self.op.bit8) {
+                [self step]; }
             [self step];
             break;
             
@@ -277,7 +285,6 @@ static unsigned char fontset[80] =
     
     NSString *errorMessage = [NSString stringWithFormat:@"Error: Opcode %x not found", opcode];
     
-    unsigned short x, y;
     
     switch (opcode & 0xF00F) {
             
@@ -289,19 +296,19 @@ static unsigned char fontset[80] =
             
         case 0x8001:
             //Sets VX to VX or VY
-            V[self.op.x] = V[self.op.x] | V[self.op.x];
+            V[self.op.x] = V[self.op.x] | V[self.op.y];
             [self step];
             break;
             
         case 0x8002:
             //Sets VX to VX and VY
-            V[self.op.x] = V[self.op.x] & V[self.op.x];
+            V[self.op.x] = V[self.op.x] & V[self.op.y];
             [self step];
             break;
             
         case 0x8003:
             // Sets VX to VX xor VY
-            V[self.op.x] = V[self.op.x] ^ V[self.op.x];
+            V[self.op.x] = V[self.op.x] ^ V[self.op.y];
             [self step];
             break;
             
@@ -315,9 +322,9 @@ static unsigned char fontset[80] =
             
         case 0x8005:
             // VY is subtracted from VX. VF is set to 0 when there's a borrow, and 1 when there isn't.
-            if( V[self.op.y] > V[self.op.x]) V[0xF] = 0;
+            if( V[self.op.x] > V[self.op.x]) V[0xF] = 0;
             else V[0xF] = 1;
-            V[self.op.x] -= V[self.op.y];
+            V[self.op.x] = V[self.op.x] - V[self.op.y];
             [self step];
             break;
             
@@ -365,7 +372,7 @@ static unsigned char fontset[80] =
             // Returns from a subroutine
             sp--;
             pc = stack[sp];
-            sp = 0;
+            stack[sp] = 0;
             [self step];
             break;
             
@@ -383,7 +390,14 @@ static unsigned char fontset[80] =
         case 0xE0A1:
             // Skips the next instruction if the key stored in VX isn't pressed.
 
-            if((arc4random()%10) > 5) [self step];
+            if(key[self.op.x] != 1) [self step];
+            [self step];
+            break;
+            
+        case 0xE09E:
+            // Skips the next instruction if the key stored in VX is pressed.
+            
+            if(key[self.op.x] == 1) [self step];
             [self step];
             break;
             
@@ -399,6 +413,13 @@ static unsigned char fontset[80] =
     NSString *errorMessage = [NSString stringWithFormat:@"Error: Opcode %x not found", opcode];
     
     switch (opcode & 0xF0FF) {
+            
+        case 0xF00A:
+            // A key press is awaited, and then stored in VX.
+            V[self.op.x] = arc4random()%15;
+            key[self.op.x] = V[self.op.x];
+            [self step];
+            break;
             
         case 0xF007:
             //Sets the VX to delay timer
@@ -535,9 +556,9 @@ static unsigned char fontset[80] =
     
     if (d_pc != pc) NSLog(@"pc changed - old: %x new: %x", d_pc, pc);
     
-    if (d_delay_timer != delay_timer) NSLog(@"delay_timer changed - old: %d new: %d", d_delay_timer, delay_timer);
+    if (d_delay_timer != delay_timer) NSLog(@"delay_timer changed - old: %x new: %x", d_delay_timer, delay_timer);
     
-    if (d_sound_timer != sound_timer) NSLog(@"sound_timer changed - old: %d new: %d", d_sound_timer, sound_timer);
+    if (d_sound_timer != sound_timer) NSLog(@"sound_timer changed - old: %x new: %x", d_sound_timer, sound_timer);
     
     
     // Here we identify changes in stack
@@ -606,6 +627,44 @@ static unsigned char fontset[80] =
     }
     [self copyGFXinCanvas];
     [self.canvas setNeedsDisplay];
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section    
+{
+    return 11;
+}
+
+- (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    static NSString *reuse = @"chip8_debug_cell";
+    
+//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuse];
+//    if(cell == nil) {
+//        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:reuse];
+//
+//}
+    NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"DebugCell" owner:self options:nil];
+    
+    DebugCell *cell = (DebugCell *)[nib objectAtIndex:0];
+
+    if(indexPath.row < 8) {
+        cell.textLabel.text = [NSString stringWithFormat:@"V%x: %x    V%x: %x", indexPath.row, V[indexPath.row], 8+indexPath.row, V[8+indexPath.row]];
+    }
+    
+    if(indexPath.row == 8) cell.textLabel.text =
+        [NSString stringWithFormat:@"Sound:    %x", sound_timer];
+    
+    if(indexPath.row == 9) cell.textLabel.text =
+        [NSString stringWithFormat:@"Delay:    %x", delay_timer];
+
+    if(indexPath.row == 10) cell.textLabel.text =
+        [NSString stringWithFormat:@"Opcode:    %x", opcode];
+    
+    if(indexPath.row == 0) cell.textLabel.text = [NSString stringWithFormat:@"%@    PC:  %x", cell.textLabel.text , pc];
+    
+    if(indexPath.row == 1) cell.textLabel.text = [NSString stringWithFormat:@"%@    I:   %x", cell.textLabel.text , i];
+    
+    return cell;
 }
 
 @end

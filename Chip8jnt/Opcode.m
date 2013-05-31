@@ -15,7 +15,7 @@
     if ( self = [super init] ) {
         self.opcode = op;
         self.x = (self.opcode & 0x0F00) >> 8;
-        self.y = (self.opcode & 0x0F00) >> 4;
+        self.y = (self.opcode & 0x00F0) >> 4;
         self.address = (self.opcode & 0x0FFF);
         self.bit8 = (self.opcode & 0x00FF);
         self.bit4 = (self.opcode & 0x000F);
@@ -28,7 +28,7 @@
 - (void)recreate {
 
     self.x = (self.opcode & 0x0F00) >> 8;
-    self.y = (self.opcode & 0x0F00) >> 4;
+    self.y = (self.opcode & 0x00F0) >> 4;
     self.address = (self.opcode & 0x0FFF);
     self.bit8 = (self.opcode & 0x00FF);
     self.bit4 = (self.opcode & 0x000F);

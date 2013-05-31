@@ -13,6 +13,6 @@
 
 @interface Chip8jntUtils : NSObject
 
-- (void)listAllRoms; // List in console all avaliable roms
+- (NSArray*)getAllRomsFilenames; // List in console all avaliable roms
 
 @end

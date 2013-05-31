@@ -19,14 +19,22 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    
+    // Receives notification from debug;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(debugRefresh) name:@"debugRefresh" object:nil];
 
     // We create a object to execute some utils functions
     Chip8jntUtils *utils = [[Chip8jntUtils alloc] init];
-    [utils listAllRoms]; // Show all roms avaliable.
     
-    Chip8 *ch8 = [[Chip8 alloc] init];
-    ch8.canvas = self.canvas;
-    [ch8 startWithRom:@"pong.ch8"];
+    self.ch8 = [[Chip8 alloc] init];
+    self.ch8.canvas = self.canvas;
+    self.debugTable.dataSource = self.ch8;
+    self.debugTable.delegate =self;
+    
+    NSString *romName = [[utils getAllRomsFilenames] objectAtIndex:40];
+    romName = @"Cave.ch8";
+    
+    [self.ch8 startWithRom:romName];
 }
 
 - (void)didReceiveMemoryWarning
@@ -35,8 +43,19 @@
     // Dispose of any resources that can be recreated.
 }
 
--(void)bitwise {
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    
+    return 18;
+}
 
+- (void)debugRefresh {
+    
+    [self.debugTable reloadData];
+}
+
+- (IBAction)debugStep:(id)sender {
+    [self.ch8 cycle]; // Run a emulate cycle;
 }
 
 @end

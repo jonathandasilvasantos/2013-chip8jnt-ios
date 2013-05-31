@@ -10,7 +10,7 @@
 
 @implementation Chip8jntUtils
 
-- (void)listAllRoms {
+- (NSArray*)getAllRomsFilenames {
 
     NSString *bundleRoot = [[NSBundle mainBundle] bundlePath];
     NSFileManager *fm = [NSFileManager defaultManager];
@@ -18,7 +18,7 @@
     NSPredicate *fltr = [NSPredicate predicateWithFormat:@"self ENDSWITH '.ch8'"];
     NSArray *onlyRoms = [dirContents filteredArrayUsingPredicate:fltr];
     
-    NSLog(@"%@", onlyRoms);
+    return onlyRoms;
 }
 
 @end

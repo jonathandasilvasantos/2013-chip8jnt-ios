@@ -12,7 +12,7 @@
 #import "Opcode.h"
 
 
-@interface Chip8 : NSObject {
+@interface Chip8 : NSObject <UITableViewDataSource> {
     
     unsigned short opcode;
     unsigned char memory[4096]; // Chip-8 has a 4k memory
