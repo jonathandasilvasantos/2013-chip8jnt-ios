@@ -31,7 +31,7 @@ along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 How to use
 ===========
 
-1:	Include rom files in Supported Files/ROMS/
+1:	Include rom files in Supporting Files/ROMS/
 
 2:	In ViewController.m search for: romName = @"BC_test.ch8" and replace with the rom file that you want to start the emulator.
 
