@@ -28,6 +28,10 @@
 @property (nonatomic, strong) Chip8 *ch8;
 @property (nonatomic, strong) IBOutlet Chip8Canvas *canvas;
 @property (nonatomic, strong) IBOutlet UITableView *debugTable;
+@property (nonatomic, strong) IBOutlet UIView *keyboardView;
+
+- (IBAction)touchDownKey:(id)sender; // Touch down a key;
+- (IBAction)touchUpsideKey:(id)sender; // Touch upside a key;
 
 - (void)debugRefresh; // Request to refresh data;
 - (IBAction)debugStep:(id)sender; // Run a emulate cycle;

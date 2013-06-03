@@ -27,6 +27,7 @@
 		569351E41754072E00911B2A /* Chip8Canvas.m in Sources */ = {isa = PBXBuildFile; fileRef = 569351E31754072E00911B2A /* Chip8Canvas.m */; };
 		56A900DA17593AD3002EB134 /* DebugCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 56A900D917593AD3002EB134 /* DebugCell.m */; };
 		56A900DE17593BB6002EB134 /* DebugCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 56A900DD17593BB6002EB134 /* DebugCell.xib */; };
+		56D2D0B5175D0804009231C5 /* keyboard.ch8 in Resources */ = {isa = PBXBuildFile; fileRef = 56D2D0B4175D0804009231C5 /* keyboard.ch8 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -60,6 +61,7 @@
 		56A900D817593AD3002EB134 /* DebugCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DebugCell.h; path = Chip8jnt/DebugCell.h; sourceTree = "<group>"; };
 		56A900D917593AD3002EB134 /* DebugCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DebugCell.m; path = Chip8jnt/DebugCell.m; sourceTree = "<group>"; };
 		56A900DD17593BB6002EB134 /* DebugCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DebugCell.xib; sourceTree = "<group>"; };
+		56D2D0B4175D0804009231C5 /* keyboard.ch8 */ = {isa = PBXFileReference; lastKnownFileType = file; name = keyboard.ch8; path = ROMS/keyboard.ch8; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -194,6 +196,7 @@
 		56A5889D175C2108006571CD /* ROMS */ = {
 			isa = PBXGroup;
 			children = (
+				56D2D0B4175D0804009231C5 /* keyboard.ch8 */,
 				563A2D7C175C384B008E30CB /* BC_test.ch8 */,
 			);
 			name = ROMS;
@@ -269,6 +272,7 @@
 				56A900DE17593BB6002EB134 /* DebugCell.xib in Resources */,
 				565E80F3175C286F00216FAD /* Beep.aiff in Resources */,
 				563A2D7D175C384B008E30CB /* BC_test.ch8 in Resources */,
+				56D2D0B5175D0804009231C5 /* keyboard.ch8 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

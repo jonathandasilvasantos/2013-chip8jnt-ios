@@ -49,10 +49,13 @@
     
     // Print all roms names in console;
     NSLog(@"%@", [utils getAllRomsFilenames] );
-    NSString *romName = @"BC_test.ch8";
+    NSString *romName = @"keyboard.ch8";
 
+    BOOL debug = NO;
+    [self.ch8 startWithRom:romName andDebug:debug];
     
-    [self.ch8 startWithRom:romName];
+    // If debug is true we need to hide the keyboard layer to show debug table
+    if(debug) [self.keyboardView setHidden:YES];
 }
 
 - (void)didReceiveMemoryWarning
@@ -74,6 +77,18 @@
 
 - (IBAction)debugStep:(id)sender {
     [self.ch8 cycle]; // Run a emulate cycle;
+}
+
+- (IBAction)touchDownKey:(id)sender {
+    
+    UIButton *button = (UIButton*)sender;
+    [self.ch8 setPress:button.tag];
+}
+
+- (IBAction)touchUpsideKey:(id)sender {
+    
+    UIButton *button = (UIButton*)sender;
+    [self.ch8 setUnpress:button.tag];
 }
 
 @end

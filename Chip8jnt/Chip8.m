@@ -49,10 +49,10 @@ static unsigned char fontset[80] =
 
 
 // THis method has the duty to start cpu.
-- (void) startWithRom:(NSString*)rom_name {
+- (void) startWithRom:(NSString*)rom_name andDebug:(BOOL)debugState {
     
     // We turn on the debug mode
-    debug = NO;
+    debug = debugState;
     
     // First, we need to initialize the cpu
     [self initialize];
@@ -146,6 +146,9 @@ static unsigned char fontset[80] =
 
 // Here we clean all the keys state setting to zero value.
 - (void)resetKeys {
+
+    keyIsAwaited = NO;
+    keyAwaitedInV = 0;
     
     // We need to remember that the Chip-8 only work with 16 keys (0 - F)
     for(int pos=0; pos<16; pos++) key[pos] = 0;
@@ -168,6 +171,14 @@ static unsigned char fontset[80] =
 // CPU Cycle: fetch, decode and execute opcodes
 - (void)cycle {
 
+    // We don't do a cycle when a key is awaited
+    if(keyIsAwaited) {
+        if(!debug) [self performSelector:@selector(cycle) withObject:nil afterDelay:0.005];
+        
+        return;
+    }
+        
+    
     // Random key
     [self dPressRandomKey];
     
@@ -427,14 +438,14 @@ static unsigned char fontset[80] =
         case 0xE0A1:
             // Skips the next instruction if the key stored in VX isn't pressed.
 
-            if(key[self.op.x] != 1) [self step];
+            if(key[V[self.op.x]] != 1) [self step];
             [self step];
             break;
             
         case 0xE09E:
             // Skips the next instruction if the key stored in VX is pressed.
             
-            if(key[self.op.x] == 1) [self step];
+            if(key[V[self.op.x]] == 1) [self step];
             [self step];
             break;
             
@@ -453,8 +464,8 @@ static unsigned char fontset[80] =
             
         case 0xF00A:
             // A key press is awaited, and then stored in VX.
-            V[self.op.x] = arc4random()%15;
-            key[self.op.x] = V[self.op.x];
+            keyIsAwaited = YES;
+            keyAwaitedInV = self.op.x;
             [self step];
             break;
             
@@ -676,6 +687,27 @@ static unsigned char fontset[80] =
     [self.canvas setNeedsDisplay];
 }
 
+#pragma mark -
+#pragma Keyboard
+
+- (void)setPress:(unsigned short)currentKey {
+    
+    key[currentKey] = 1;
+    
+    if(keyIsAwaited) {
+        keyIsAwaited = NO;
+        V[keyAwaitedInV] = currentKey;
+        NSLog(@"%x", currentKey	);
+    }
+}
+
+- (void)setUnpress:(unsigned short)currentKey {
+    key[currentKey] = 0;
+}
+
+#pragma mark -
+#pragma Debug Table
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section    
 {
     return 11;
@@ -711,5 +743,6 @@ static unsigned char fontset[80] =
     
     return cell;
 }
+
 
 @end

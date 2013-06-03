@@ -8,12 +8,25 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Chip8jnt/Chip8.m"
-         timestampString = "391915174.322539"
+         timestampString = "391974342.705108"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "613"
-         endingLineNumber = "613"
-         landmarkName = "-dPressRandomKey"
+         startingLineNumber = "440"
+         endingLineNumber = "440"
+         landmarkName = "-handleEXXXOpcodes"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Chip8jnt/Chip8.m"
+         timestampString = "391974342.705108"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "447"
+         endingLineNumber = "447"
+         landmarkName = "-handleEXXXOpcodes"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

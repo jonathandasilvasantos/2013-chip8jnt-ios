@@ -46,6 +46,9 @@
     unsigned short stack[16]; // 16 is the limit level supported for address stack;
     unsigned short sp; // store the current stack pointer level;
     unsigned char key[16]; // record the input key pressed: Range: 0 - F;
+    
+    BOOL keyIsAwaited; // State of key is awaited;
+    unsigned short keyAwaitedInV; // A key is awaited in;
 
     // Now we have me same variables for debug use
     
@@ -66,7 +69,7 @@
 @property(nonatomic, strong) Chip8Canvas *canvas; // Canvas for draw method
 @property(nonatomic, strong) Opcode *op; // Smart opcode object;
 
-- (void) startWithRom:(NSString*)rom_name; // Start emulator cycle with a specific rom
+- (void) startWithRom:(NSString*)rom_name andDebug:(BOOL)debugState; // Start emulator cycle with a specific rom
 
 - (void)loadGame:(NSString*)rom_name; // Load the rom in the memory (0x200 - 0xFFF)
 
@@ -113,4 +116,8 @@
 
 - (void)copyGFXinCanvas; // We make a copy from local DFX to Canvas;
 - (void) executeDXYN;
+
+- (void)setPress:(unsigned short)currentKey; // Press a key;
+- (void)setUnpress:(unsigned short)currentKey; // Unpress a key;
+
 @end
