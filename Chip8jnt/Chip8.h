@@ -58,14 +58,11 @@
 
 - (void)step; // pc = pc + 2: runs the program counter;
 
-- (void)setKeys; // Turn on or off the registers keys;
-
-- (void)draw; // Draw the current display state;
-
 - (void)dclone; // Clone current state of Chip-8 in debug variables
 - (void)dlogCurrentState; // print all registers and flags.
 - (void)dlogAffecteds; // print affecteds registers after a execute opcode.
 - (void)dlogPrintOpcode; // print the current opcode;
+- (void)dPressRandomKey; // press a random key for debug;
 - (void)interruptWithMessage:(NSString*)message; // interrupt and print message;
 
 - (void)loadFontSet; // Load constants font set in memory.

@@ -8,11 +8,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Chip8jnt/Chip8.m"
-         timestampString = "391728985.067169"
+         timestampString = "391912125.547382"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "595"
-         endingLineNumber = "595"
+         startingLineNumber = "602"
+         endingLineNumber = "602"
          landmarkName = "-interruptWithMessage:"
          landmarkType = "5">
       </FileBreakpoint>

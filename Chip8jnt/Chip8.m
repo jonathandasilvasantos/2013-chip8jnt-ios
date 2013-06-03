@@ -36,7 +36,7 @@ static unsigned char fontset[80] =
 - (void) startWithRom:(NSString*)rom_name {
     
     // We turn on the debug mode
-    debug = YES;
+    debug = NO;
     
     // First, we need to initialize the cpu
     [self initialize];
@@ -142,9 +142,7 @@ static unsigned char fontset[80] =
 - (void)cycle {
 
     // Random key
-    int k = arc4random()%15;
-    key[k] = !key[k];
-    
+    [self dPressRandomKey];
     
     opcode = memory[pc] << 8 | memory[pc + 1];
     [self.op setOpcode:opcode];
@@ -227,6 +225,12 @@ static unsigned char fontset[80] =
         case 0x4000:
             // Skips the next instruction if VX != NN
             if(V[self.op.x] != self.op.bit8) [self step];
+            [self step];
+            break;
+            
+        case 0x5000:
+            // Skips the next instruction if VX equals VY.
+            if(V[self.op.x] == V[self.op.y]) [self step];
             [self step];
             break;
             
@@ -469,15 +473,16 @@ static unsigned char fontset[80] =
 
         case 0xF055:
             // Stores V0 to VX in memory starting at address I
-            for(int pos=0; pos<=V[self.op.x]; pos++)
-                memory[pos + i] = V[i];
+            for(int pos=0; pos <= self.op.x; pos++)
+                memory[i+pos] = V[i+pos];
             [self step];
             break;
             
         case 0xF065:
             // Fills V0 to VX with values from memory starting at address I
-            for(int pos = 0; pos < V[self.op.x]; pos++)
-                memory[i+pos] = V[pos];
+            for(int pos = 0; pos <= self.op.x; pos++)
+                V[pos] = memory[i+pos];
+
             [self step];
             break;
             
@@ -588,10 +593,19 @@ static unsigned char fontset[80] =
     NSLog(@"Current upcode: %x", opcode);
 }
 
+- (void)dPressRandomKey {
+    
+    if(!debug) return;
+    
+    int k = arc4random()%15;
+    key[k] = !key[k];
+}
+
 // Interrupt cycle and print message
 - (void)interruptWithMessage:(NSString*)message {
     
     NSLog(@"%@", message);
+
     
 }
 
@@ -638,8 +652,6 @@ static unsigned char fontset[80] =
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    static NSString *reuse = @"chip8_debug_cell";
     
 //    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuse];
 //    if(cell == nil) {

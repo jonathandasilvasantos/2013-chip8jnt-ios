@@ -31,8 +31,10 @@
     self.debugTable.dataSource = self.ch8;
     self.debugTable.delegate =self;
     
-    NSString *romName = [[utils getAllRomsFilenames] objectAtIndex:40];
-    romName = @"Cave.ch8";
+    // Print all roms names in console;
+    NSLog(@"%@", [utils getAllRomsFilenames] );
+    NSString *romName = @"ROM_NAME.ch8";
+
     
     [self.ch8 startWithRom:romName];
 }
