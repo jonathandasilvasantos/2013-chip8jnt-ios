@@ -7,12 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <AudioToolbox/AudioToolbox.h>
+
 #import "Chip8Canvas.h"
 #import "Chip8jntUtils.h"
 #import "Opcode.h"
 
 
 @interface Chip8 : NSObject <UITableViewDataSource> {
+    
+    SystemSoundID beepSound; // Audio identifier for beep.
     
     unsigned short opcode;
     unsigned char memory[4096]; // Chip-8 has a 4k memory
@@ -52,7 +56,7 @@
 
 - (void)initialize; // Reset all registers and memory;
 
-
+- (void)loadSound; // Load the beep sound;
 
 - (void)cycle; // Run a emulation cycle
 

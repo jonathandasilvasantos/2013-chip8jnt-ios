@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		56542F0A17552FB300BFA0CB /* Opcode.m in Sources */ = {isa = PBXBuildFile; fileRef = 56542F0917552FB300BFA0CB /* Opcode.m */; };
+		565E80F1175C23F000216FAD /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 565E80F0175C23F000216FAD /* AudioToolbox.framework */; };
+		565E80F3175C286F00216FAD /* Beep.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 565E80F2175C286F00216FAD /* Beep.aiff */; };
 		566A50061752866A00A90940 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 566A50051752866A00A90940 /* UIKit.framework */; };
 		566A50081752866A00A90940 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 566A50071752866A00A90940 /* Foundation.framework */; };
 		566A500A1752866A00A90940 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 566A50091752866A00A90940 /* CoreGraphics.framework */; };
@@ -29,6 +31,8 @@
 /* Begin PBXFileReference section */
 		56542F0817552FB300BFA0CB /* Opcode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Opcode.h; sourceTree = "<group>"; };
 		56542F0917552FB300BFA0CB /* Opcode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Opcode.m; sourceTree = "<group>"; };
+		565E80F0175C23F000216FAD /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		565E80F2175C286F00216FAD /* Beep.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = Beep.aiff; sourceTree = "<group>"; };
 		566A50021752866A00A90940 /* Chip8jnt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chip8jnt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		566A50051752866A00A90940 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		566A50071752866A00A90940 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -51,7 +55,6 @@
 		566A50331752BA2700A90940 /* Chip8jntUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Chip8jntUtils.m; sourceTree = "<group>"; };
 		569351E21754072E00911B2A /* Chip8Canvas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Chip8Canvas.h; sourceTree = "<group>"; };
 		569351E31754072E00911B2A /* Chip8Canvas.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Chip8Canvas.m; sourceTree = "<group>"; };
-		56A66B271756AA6600FC7760 /* SNAFU.ch8 */ = {isa = PBXFileReference; lastKnownFileType = file; name = SNAFU.ch8; path = roms/SNAFU.ch8; sourceTree = SOURCE_ROOT; };
 		56A900D817593AD3002EB134 /* DebugCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DebugCell.h; path = Chip8jnt/DebugCell.h; sourceTree = "<group>"; };
 		56A900D917593AD3002EB134 /* DebugCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DebugCell.m; path = Chip8jnt/DebugCell.m; sourceTree = "<group>"; };
 		56A900DD17593BB6002EB134 /* DebugCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DebugCell.xib; sourceTree = "<group>"; };
@@ -62,6 +65,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				565E80F1175C23F000216FAD /* AudioToolbox.framework in Frameworks */,
 				566A50061752866A00A90940 /* UIKit.framework in Frameworks */,
 				566A50081752866A00A90940 /* Foundation.framework in Frameworks */,
 				566A500A1752866A00A90940 /* CoreGraphics.framework in Frameworks */,
@@ -71,9 +75,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		565E80F4175C289E00216FAD /* SOUND */ = {
+			isa = PBXGroup;
+			children = (
+				565E80F2175C286F00216FAD /* Beep.aiff */,
+			);
+			name = SOUND;
+			sourceTree = "<group>";
+		};
 		566A4FF91752866A00A90940 = {
 			isa = PBXGroup;
 			children = (
+				565E80F0175C23F000216FAD /* AudioToolbox.framework */,
 				566A500B1752866A00A90940 /* Chip8jnt */,
 				566A50041752866A00A90940 /* Frameworks */,
 				566A50031752866A00A90940 /* Products */,
@@ -117,9 +130,9 @@
 		566A500C1752866A00A90940 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				565E80F4175C289E00216FAD /* SOUND */,
 				56A5889D175C2108006571CD /* ROMS */,
 				566A500D1752866A00A90940 /* Chip8jnt-Info.plist */,
-				56A66B271756AA6600FC7760 /* SNAFU.ch8 */,
 				566A500E1752866A00A90940 /* InfoPlist.strings */,
 				566A50111752866A00A90940 /* main.m */,
 				566A50131752866A00A90940 /* Chip8jnt-Prefix.pch */,
@@ -251,6 +264,7 @@
 				566A501C1752866B00A90940 /* Default-568h@2x.png in Resources */,
 				566A50221752866B00A90940 /* ViewController.xib in Resources */,
 				56A900DE17593BB6002EB134 /* DebugCell.xib in Resources */,
+				565E80F3175C286F00216FAD /* Beep.aiff in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -33,7 +33,7 @@
     
     // Print all roms names in console;
     NSLog(@"%@", [utils getAllRomsFilenames] );
-    NSString *romName = @"ROM_NAME.ch8";
+    NSString *romName = @"ROM_FILE_NAME.ch8";
 
     
     [self.ch8 startWithRom:romName];

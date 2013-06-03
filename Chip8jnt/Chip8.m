@@ -92,7 +92,18 @@ static unsigned char fontset[80] =
     [self resetKeys]; // Reset all keys state
     [self resetMemory]; // Reset all memory of Chip-8
     
+    [self loadSound];
     [self loadFontSet];
+}
+
+// Load the beep sound
+- (void)loadSound {
+    
+    NSString* path = [[NSBundle mainBundle]
+                      pathForResource:@"Beep" ofType:@"aiff"];
+    NSURL* url = [NSURL fileURLWithPath:path];
+    AudioServicesCreateSystemSoundID((__bridge CFURLRef)url, &beepSound);
+
 }
 
 // Here we load the font set in memory
@@ -155,6 +166,9 @@ static unsigned char fontset[80] =
     [self dlogAffecteds];
     
     [self handleTimers];
+    
+    // Play a beep when the sound timer reaches 1:
+    if(sound_timer == 1) [self beep];
 
     // Make a notification to debug manager;
     if(debug) {
@@ -178,7 +192,7 @@ static unsigned char fontset[80] =
 }
 
 - (void)beep {
-    NSLog(@"Beep!");
+    AudioServicesPlaySystemSound(beepSound);
 }
 
 // Do a step in program counter.
