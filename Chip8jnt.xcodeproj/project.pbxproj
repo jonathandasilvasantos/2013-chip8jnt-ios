@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		563A2D7D175C384B008E30CB /* BC_test.ch8 in Resources */ = {isa = PBXBuildFile; fileRef = 563A2D7C175C384B008E30CB /* BC_test.ch8 */; };
 		56542F0A17552FB300BFA0CB /* Opcode.m in Sources */ = {isa = PBXBuildFile; fileRef = 56542F0917552FB300BFA0CB /* Opcode.m */; };
 		565E80F1175C23F000216FAD /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 565E80F0175C23F000216FAD /* AudioToolbox.framework */; };
 		565E80F3175C286F00216FAD /* Beep.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 565E80F2175C286F00216FAD /* Beep.aiff */; };
@@ -29,6 +30,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		563A2D7C175C384B008E30CB /* BC_test.ch8 */ = {isa = PBXFileReference; lastKnownFileType = file; name = BC_test.ch8; path = ROMS/BC_test.ch8; sourceTree = SOURCE_ROOT; };
 		56542F0817552FB300BFA0CB /* Opcode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Opcode.h; sourceTree = "<group>"; };
 		56542F0917552FB300BFA0CB /* Opcode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Opcode.m; sourceTree = "<group>"; };
 		565E80F0175C23F000216FAD /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -192,6 +194,7 @@
 		56A5889D175C2108006571CD /* ROMS */ = {
 			isa = PBXGroup;
 			children = (
+				563A2D7C175C384B008E30CB /* BC_test.ch8 */,
 			);
 			name = ROMS;
 			sourceTree = "<group>";
@@ -265,6 +268,7 @@
 				566A50221752866B00A90940 /* ViewController.xib in Resources */,
 				56A900DE17593BB6002EB134 /* DebugCell.xib in Resources */,
 				565E80F3175C286F00216FAD /* Beep.aiff in Resources */,
+				563A2D7D175C384B008E30CB /* BC_test.ch8 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
