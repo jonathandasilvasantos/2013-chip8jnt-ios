@@ -171,14 +171,15 @@ static unsigned char fontset[80] =
 // CPU Cycle: fetch, decode and execute opcodes
 - (void)cycle {
 
+
+    
     // We don't do a cycle when a key is awaited
     if(keyIsAwaited) {
         if(!debug) [self performSelector:@selector(cycle) withObject:nil afterDelay:0.005];
         
         return;
     }
-        
-    
+
     // Random key
     [self dPressRandomKey];
     
@@ -521,8 +522,10 @@ static unsigned char fontset[80] =
             
         case 0xF065:
             // Fills V0 to VX with values from memory starting at address I
-            for(int pos = 0; pos <= self.op.x; pos++)
+            for(int pos = 0; pos <= self.op.x; pos++){
                 V[pos] = memory[i+pos];
+            }
+            
 
             [self step];
             break;
@@ -636,10 +639,10 @@ static unsigned char fontset[80] =
 
 - (void)dPressRandomKey {
     
-    if(!debug) return;
+//    if(!debug) return;
     
-    int k = arc4random()%15;
-    key[k] = !key[k];
+//    int k = arc4random()%15;
+//    key[k] = !key[k];
 }
 
 // Interrupt cycle and print message
@@ -697,12 +700,11 @@ static unsigned char fontset[80] =
     if(keyIsAwaited) {
         keyIsAwaited = NO;
         V[keyAwaitedInV] = currentKey;
-        NSLog(@"%x", currentKey	);
     }
 }
 
 - (void)setUnpress:(unsigned short)currentKey {
-    key[currentKey] = 0;
+//    key[currentKey] = 0;
 }
 
 #pragma mark -

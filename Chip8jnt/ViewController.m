@@ -49,13 +49,15 @@
     
     // Print all roms names in console;
     NSLog(@"%@", [utils getAllRomsFilenames] );
-    NSString *romName = @"keyboard.ch8";
+    NSString *romName = @"BC_test.ch8";
 
     BOOL debug = NO;
     [self.ch8 startWithRom:romName andDebug:debug];
     
     // If debug is true we need to hide the keyboard layer to show debug table
-    if(debug) [self.keyboardView setHidden:YES];
+    if(debug) [self.keyboardView setAlpha:0.3];
+    
+    
 }
 
 - (void)didReceiveMemoryWarning
