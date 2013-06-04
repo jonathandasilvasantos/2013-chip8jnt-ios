@@ -24,9 +24,9 @@
 		566A50221752866B00A90940 /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 566A50201752866B00A90940 /* ViewController.xib */; };
 		566A502B17529F1000A90940 /* Chip8.m in Sources */ = {isa = PBXBuildFile; fileRef = 566A502A17529F1000A90940 /* Chip8.m */; };
 		566A50341752BA2700A90940 /* Chip8jntUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 566A50331752BA2700A90940 /* Chip8jntUtils.m */; };
+		566C7113175E29EF004868EA /* DebugCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 566C7112175E29EF004868EA /* DebugCell.xib */; };
 		569351E41754072E00911B2A /* Chip8Canvas.m in Sources */ = {isa = PBXBuildFile; fileRef = 569351E31754072E00911B2A /* Chip8Canvas.m */; };
 		56A900DA17593AD3002EB134 /* DebugCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 56A900D917593AD3002EB134 /* DebugCell.m */; };
-		56A900DE17593BB6002EB134 /* DebugCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 56A900DD17593BB6002EB134 /* DebugCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,11 +55,11 @@
 		566A502A17529F1000A90940 /* Chip8.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Chip8.m; sourceTree = "<group>"; };
 		566A50321752BA2700A90940 /* Chip8jntUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Chip8jntUtils.h; sourceTree = "<group>"; };
 		566A50331752BA2700A90940 /* Chip8jntUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Chip8jntUtils.m; sourceTree = "<group>"; };
+		566C7112175E29EF004868EA /* DebugCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DebugCell.xib; path = Chip8jnt/DebugCell.xib; sourceTree = "<group>"; };
 		569351E21754072E00911B2A /* Chip8Canvas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Chip8Canvas.h; sourceTree = "<group>"; };
 		569351E31754072E00911B2A /* Chip8Canvas.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Chip8Canvas.m; sourceTree = "<group>"; };
 		56A900D817593AD3002EB134 /* DebugCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DebugCell.h; path = Chip8jnt/DebugCell.h; sourceTree = "<group>"; };
 		56A900D917593AD3002EB134 /* DebugCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DebugCell.m; path = Chip8jnt/DebugCell.m; sourceTree = "<group>"; };
-		56A900DD17593BB6002EB134 /* DebugCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DebugCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -202,9 +202,9 @@
 		56A900D717593A6D002EB134 /* DEBIG */ = {
 			isa = PBXGroup;
 			children = (
+				566C7112175E29EF004868EA /* DebugCell.xib */,
 				56A900D817593AD3002EB134 /* DebugCell.h */,
 				56A900D917593AD3002EB134 /* DebugCell.m */,
-				56A900DD17593BB6002EB134 /* DebugCell.xib */,
 			);
 			name = DEBIG;
 			path = ..;
@@ -266,9 +266,9 @@
 				566A501A1752866B00A90940 /* Default@2x.png in Resources */,
 				566A501C1752866B00A90940 /* Default-568h@2x.png in Resources */,
 				566A50221752866B00A90940 /* ViewController.xib in Resources */,
-				56A900DE17593BB6002EB134 /* DebugCell.xib in Resources */,
 				565E80F3175C286F00216FAD /* Beep.aiff in Resources */,
 				563A2D7D175C384B008E30CB /* BC_test.ch8 in Resources */,
+				566C7113175E29EF004868EA /* DebugCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

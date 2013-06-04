@@ -29,6 +29,7 @@
 @property (nonatomic, strong) IBOutlet Chip8Canvas *canvas;
 @property (nonatomic, strong) IBOutlet UITableView *debugTable;
 @property (nonatomic, strong) IBOutlet UIView *keyboardView;
+@property (nonatomic, strong) IBOutlet UIButton *stepButton;
 
 - (IBAction)touchDownKey:(id)sender; // Touch down a key;
 - (IBAction)touchUpsideKey:(id)sender; // Touch upside a key;

@@ -55,7 +55,13 @@
     [self.ch8 startWithRom:romName andDebug:debug];
     
     // If debug is true we need to hide the keyboard layer to show debug table
-    if(debug) [self.keyboardView setAlpha:0.3];
+    if(debug) {
+        [self.keyboardView setAlpha:0.3];
+        [self.stepButton setHidden:NO];
+    } else {
+        
+        [self.stepButton setHidden:YES];
+    }
     
     
 }
